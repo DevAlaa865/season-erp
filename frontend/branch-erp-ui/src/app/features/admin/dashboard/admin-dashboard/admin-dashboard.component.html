@@ -1,0 +1,221 @@
+<div class="p-4 md:p-6 space-y-6">
+
+  <h1 class="text-xl md:text-2xl font-bold text-slate-900 mb-4 text-white">
+    لوحة تحكم الأدمن
+  </h1>
+
+  <!-- GRID RESPONSIVE -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+
+    <!-- كارت: إدارة المستخدمين -->
+    <button
+      type="button"
+      *hasPermission="'Permissions.Manage'"
+      (click)="openUsers()"
+      class="group bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4 w-full text-right hover:-translate-y-1 hover:shadow-lg transition flex flex-col gap-2">
+
+      <div class="flex items-center justify-between">
+        <span class="text-sm md:text-base font-semibold text-slate-900">إدارة المستخدمين</span>
+        <i class="fa fa-users text-blue-500 text-lg md:text-xl group-hover:scale-110 transition"></i>
+      </div>
+
+      <p class="text-xs md:text-sm text-slate-500">
+        إضافة مستخدم جديد، تعديل بياناته، وتحديد الفرع والإدارة الخاصة به.
+      </p>
+    </button>
+
+    <!-- كارت: الصلاحيات -->
+    <button
+      type="button"
+      *hasPermission="'Permissions.Manage'"
+      (click)="openRoles()"
+      class="group bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4 w-full text-right hover:-translate-y-1 hover:shadow-lg transition flex flex-col gap-2">
+
+      <div class="flex items-center justify-between">
+        <span class="text-sm md:text-base font-semibold text-slate-900">إدارة الصلاحيات</span>
+        <i class="fa fa-key text-amber-500 text-lg md:text-xl group-hover:scale-110 transition"></i>
+      </div>
+
+      <p class="text-xs md:text-sm text-slate-500">
+        تحديد ما يمكن لكل مستخدم رؤيته أو تنفيذه داخل المنصة.
+      </p>
+    </button>
+
+    <!-- كارت: يومية المبيعات -->
+    <button
+      *hasPermission="'dashbord.dailysails'"   
+      type="button"
+      (click)="opendailySales()"
+      class="group bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4 w-full text-right hover:-translate-y-1 hover:shadow-lg transition flex flex-col gap-2">
+
+      <div class="flex items-center justify-between">
+        <span class="text-sm md:text-base font-semibold text-slate-900">يومية المبيعات</span>
+        <i class="fa fa-key text-amber-500 text-lg md:text-xl group-hover:scale-110 transition"></i>
+      </div>
+
+      <p class="text-xs md:text-sm text-slate-500">
+        الدخول إلى شاشة يومية المبيعات الخاصة بالفروع.
+      </p>
+    </button>
+
+    <!-- كارت: استعلام -->
+    <button
+      type="button"
+        *ngIf="auth.hasPermission('dashbord.dailysails') || auth.hasPermission('Finance.View')"
+   
+      (click)="queries()"
+      class="group bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4 w-full text-right hover:-translate-y-1 hover:shadow-lg transition flex flex-col gap-2">
+
+      <div class="flex items-center justify-between">
+        <span class="text-sm md:text-base font-semibold text-slate-900">استعلام</span>
+        <i class="fa fa-search text-amber-500 text-lg md:text-xl group-hover:scale-110 transition"></i>
+      </div>
+
+      <p class="text-xs md:text-sm text-slate-500">
+        تنفيذ استعلامات وتقارير على بيانات الفروع والمبيعات.
+      </p>
+    </button>
+
+
+    <!-- كارت: الفروع -->
+    <button
+      type="button"
+      *hasPermission="'Permissions.Manage'"
+      (click)="openBranches()"
+      class="group bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4 w-full text-right hover:-translate-y-1 hover:shadow-lg transition flex flex-col gap-2">
+
+      <div class="flex items-center justify-between">
+        <span class="text-sm md:text-base font-semibold text-slate-900">إدارة الفروع</span>
+        <i class="fa fa-store text-emerald-500 text-lg md:text-xl group-hover:scale-110 transition"></i>
+      </div>
+
+      <p class="text-xs md:text-sm text-slate-500">
+        إضافة فرع جديد، وتحديث بيانات الفروع الحالية.
+      </p>
+    </button>
+ <button
+      type="button"
+      *hasPermission="'Permissions.Manage'"
+      (click)="openReports()"
+      class="group bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4 w-full text-right hover:-translate-y-1 hover:shadow-lg transition flex flex-col gap-2">
+
+      <div class="flex items-center justify-between">
+        <span class="text-sm md:text-base font-semibold text-slate-900">التقارير</span>
+        <i class="fa fa-store text-emerald-500 text-lg md:text-xl group-hover:scale-110 transition"></i>
+      </div>
+
+      <p class="text-xs md:text-sm text-slate-500">
+         تنفيذ التقارير الخاصه بيوميه مبيعات الفروع
+      </p>
+    </button>
+    <!-- كارت: المدن -->
+    <button
+      type="button"
+      *hasPermission="'Permissions.Manage'"
+      (click)="openAreas()"
+      class="group bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4 w-full text-right hover:-translate-y-1 hover:shadow-lg transition flex flex-col gap-2">
+
+      <div class="flex items-center justify-between">
+        <span class="text-sm md:text-base font-semibold text-slate-900">إدارة المدن</span>
+        <i class="fa fa-location-dot text-rose-500 text-lg md:text-xl group-hover:scale-110 transition"></i>
+      </div>
+
+      <p class="text-xs md:text-sm text-slate-500">
+        تعريف المدن وربطها بالمناطق والفروع.
+      </p>
+    </button>
+
+    <!-- كارت: المناطق -->
+    <button
+      type="button"
+      *hasPermission="'Permissions.Manage'"
+      (click)="openCities()"
+      class="group bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4 w-full text-right hover:-translate-y-1 hover:shadow-lg transition flex flex-col gap-2">
+
+      <div class="flex items-center justify-between">
+        <span class="text-sm md:text-base font-semibold text-slate-900">إدارة المناطق</span>
+        <i class="fa fa-city text-purple-500 text-lg md:text-xl group-hover:scale-110 transition"></i>
+      </div>
+
+      <p class="text-xs md:text-sm text-slate-500">
+        إضافة المناطق وربطها بالمدن والفروع.
+      </p>
+    </button>
+
+    <!-- كارت: أنواع النشاط -->
+    <button
+      type="button"
+      *hasPermission="'Permissions.Manage'"
+      (click)="openActivities()"
+      class="group bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4 w-full text-right hover:-translate-y-1 hover:shadow-lg transition flex flex-col gap-2">
+
+      <div class="flex items-center justify-between">
+        <span class="text-sm md:text-base font-semibold text-slate-900">أنواع النشاط</span>
+        <i class="fa fa-tags text-teal-500 text-lg md:text-xl group-hover:scale-110 transition"></i>
+      </div>
+
+      <p class="text-xs md:text-sm text-slate-500">
+        تعريف أنواع النشاط (إكسسوارات، شنط، فساتين، ...).
+      </p>
+    </button>
+
+    <!-- كارت: أنواع العجز -->
+    <button
+      type="button"
+      *hasPermission="'Permissions.Manage'"
+      (click)="openShortage()"
+      class="group bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4 w-full text-right hover:-translate-y-1 hover:shadow-lg transition flex flex-col gap-2">
+
+      <div class="flex items-center justify-between">
+        <span class="text-sm md:text-base font-semibold text-slate-900">أنواع العجز</span>
+        <i class="fa fa-tags text-teal-500 text-lg md:text-xl group-hover:scale-110 transition"></i>
+      </div>
+
+      <p class="text-xs md:text-sm text-slate-500">
+        تعريف أنواع العجز (خصم، مكافأة، مرتجعات، ...).
+      </p>
+    </button>
+
+    <!-- كارت: الموظفين -->
+    <button
+      type="button"
+      *hasPermission="'Permissions.Manage'"
+      (click)="openEmployee()"
+      class="group bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4 w-full text-right hover:-translate-y-1 hover:shadow-lg transition flex flex-col gap-2">
+
+      <div class="flex items-center justify-between">
+        <span class="text-sm md:text-base font-semibold text-slate-900">الموظفين</span>
+        <i class="fa fa-user-tie text-teal-500 text-lg md:text-xl group-hover:scale-110 transition"></i>
+      </div>
+
+      <p class="text-xs md:text-sm text-slate-500">
+        تعريف الموظفين وربطهم بالفروع.
+      </p>
+    </button>
+
+    <!-- كارت: إدارة البلاد -->
+    <button
+      type="button"
+      *hasPermission="'Permissions.Manage'"
+      (click)="openCountries()"
+      class="group bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4 w-full text-right hover:-translate-y-1 hover:shadow-lg transition flex flex-col gap-2">
+
+      <div class="flex items-center justify-between">
+        <span class="text-sm md:text-base font-semibold text-slate-900">إدارة البلاد</span>
+        <i class="fa fa-flag text-red-500 text-lg md:text-xl group-hover:scale-110 transition"></i>
+      </div>
+
+      <p class="text-xs md:text-sm text-slate-500">
+        إضافة بلد جديد وتعديل البلاد الموجودة.
+      </p>
+    </button>
+
+  </div>
+
+</div>
+
+<button
+  *hasPermission="'Users.Create'"
+  class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm mt-4">
+  إضافة مستخدم (صلاحية Users.Create)
+</button>

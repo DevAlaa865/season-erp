@@ -1,0 +1,15 @@
+C:\Projects\BranchERP\BranchERP.Application\bin\Debug\net8.0\BranchERP.Application.deps.json
+C:\Projects\BranchERP\BranchERP.Application\bin\Debug\net8.0\BranchERP.Application.dll
+C:\Projects\BranchERP\BranchERP.Application\bin\Debug\net8.0\BranchERP.Application.pdb
+C:\Projects\BranchERP\BranchERP.Application\bin\Debug\net8.0\BranchERP.Domain.dll
+C:\Projects\BranchERP\BranchERP.Application\bin\Debug\net8.0\BranchERP.Domain.pdb
+C:\Projects\BranchERP\BranchERP.Application\obj\Debug\net8.0\BranchERP.Application.csproj.AssemblyReference.cache
+C:\Projects\BranchERP\BranchERP.Application\obj\Debug\net8.0\BranchERP.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\BranchERP\BranchERP.Application\obj\Debug\net8.0\BranchERP.Application.AssemblyInfoInputs.cache
+C:\Projects\BranchERP\BranchERP.Application\obj\Debug\net8.0\BranchERP.Application.AssemblyInfo.cs
+C:\Projects\BranchERP\BranchERP.Application\obj\Debug\net8.0\BranchERP.Application.csproj.CoreCompileInputs.cache
+C:\Projects\BranchERP\BranchERP.Application\obj\Debug\net8.0\BranchER.93BBE873.Up2Date
+C:\Projects\BranchERP\BranchERP.Application\obj\Debug\net8.0\BranchERP.Application.dll
+C:\Projects\BranchERP\BranchERP.Application\obj\Debug\net8.0\refint\BranchERP.Application.dll
+C:\Projects\BranchERP\BranchERP.Application\obj\Debug\net8.0\BranchERP.Application.pdb
+C:\Projects\BranchERP\BranchERP.Application\obj\Debug\net8.0\ref\BranchERP.Application.dll

@@ -1,0 +1,11 @@
+C:\Projects\BranchERP\BranchERP.Domain\bin\Debug\net8.0\BranchERP.Domain.deps.json
+C:\Projects\BranchERP\BranchERP.Domain\bin\Debug\net8.0\BranchERP.Domain.dll
+C:\Projects\BranchERP\BranchERP.Domain\bin\Debug\net8.0\BranchERP.Domain.pdb
+C:\Projects\BranchERP\BranchERP.Domain\obj\Debug\net8.0\BranchERP.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\BranchERP\BranchERP.Domain\obj\Debug\net8.0\BranchERP.Domain.AssemblyInfoInputs.cache
+C:\Projects\BranchERP\BranchERP.Domain\obj\Debug\net8.0\BranchERP.Domain.AssemblyInfo.cs
+C:\Projects\BranchERP\BranchERP.Domain\obj\Debug\net8.0\BranchERP.Domain.csproj.CoreCompileInputs.cache
+C:\Projects\BranchERP\BranchERP.Domain\obj\Debug\net8.0\BranchERP.Domain.dll
+C:\Projects\BranchERP\BranchERP.Domain\obj\Debug\net8.0\refint\BranchERP.Domain.dll
+C:\Projects\BranchERP\BranchERP.Domain\obj\Debug\net8.0\BranchERP.Domain.pdb
+C:\Projects\BranchERP\BranchERP.Domain\obj\Debug\net8.0\ref\BranchERP.Domain.dll

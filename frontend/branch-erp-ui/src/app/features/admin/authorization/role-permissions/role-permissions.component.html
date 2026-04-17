@@ -1,0 +1,80 @@
+<div class="max-w-4xl mx-auto bg-white/5 border border-blue-700 rounded-2xl p-6 text-white shadow-xl">
+
+  <h2 class="text-lg font-semibold mb-4">
+    إدارة صلاحيات الأدوار
+  </h2>
+
+  <!-- اختيار الدور -->
+  <div class="mb-4">
+    <label class="block mb-1 text-sm text-blue-100">اختر الدور</label>
+    <select
+      [(ngModel)]="selectedRoleId"
+      (change)="onRoleChange()"
+      class="w-full bg-blue-900/60 border border-blue-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <option value="">-- اختر الدور --</option>
+
+      <!-- عرض اسم الدور بالعربي -->
+      <option *ngFor="let role of roles" [value]="role.id">
+        {{ roleLabels[role.name] || role.name }}
+      </option>
+    </select>
+  </div>
+
+  <!-- قائمة الصلاحيات -->
+  <div *ngIf="selectedRoleId" class="mt-4 space-y-2 max-h-80 overflow-y-auto pr-2">
+
+    <div *ngFor="let perm of permissions" class="flex items-center justify-between bg-blue-900/40 px-3 py-2 rounded-lg">
+
+      <div>
+        <!-- عرض اسم الصلاحية بالعربي -->
+        <div class="text-sm font-medium">
+          {{ permissionLabels[perm.code] || perm.name }}
+        </div>
+
+        <!-- لو عايز تظهر الكود الإنجليزي تحتها -->
+        <!-- <div class="text-xs text-blue-200">{{ perm.code }}</div> -->
+      </div>
+
+      <div>
+        <input
+          type="checkbox"
+          [checked]="isPermissionChecked(perm.id)"
+          (change)="togglePermission(perm.id, $event)"
+          class="w-4 h-4 accent-emerald-400">
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- رسالة لو مفيش دور مختار -->
+  <div *ngIf="!selectedRoleId" class="mt-4 text-sm text-blue-200">
+    من فضلك اختر دور لعرض وتعديل صلاحياته.
+  </div>
+
+  <!-- زرار الحفظ -->
+  <div class="mt-6 flex items-center justify-between">
+    <button
+      (click)="save()"
+      [disabled]="!selectedRoleId || isLoading"
+      class="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-sm font-semibold text-white shadow-md">
+      {{ isLoading ? 'جارٍ الحفظ...' : 'حفظ الصلاحيات' }}
+    </button>
+
+    <div class="text-sm" [ngClass]="{'text-emerald-300': saveMessage.startsWith('تم'), 'text-rose-300': saveMessage.startsWith('حدث')}">
+      {{ saveMessage }}
+    </div>
+  </div>
+<div class="flex items-center justify-between mb-4">
+  <h2 class="text-lg font-semibold">
+    إدارة صلاحيات الأدوار
+  </h2>
+
+  <a
+    routerLink="/admin/permissions"
+    class="text-xs bg-emerald-500 hover:bg-emerald-400 text-white px-3 py-1 rounded-lg">
+    إدارة قائمة الصلاحيات
+  </a>
+</div>
+
+</div>

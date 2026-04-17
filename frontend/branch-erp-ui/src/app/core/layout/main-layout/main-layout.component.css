@@ -1,0 +1,49 @@
+/* دخول من اليمين (موبايل) */
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.4s ease-out;
+}
+
+/* Fade-in للمحتوى / الأوفرلاي */
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+/* NAV ITEM */
+.nav-item {
+  @apply flex items-center px-4 py-2.5 rounded-lg cursor-pointer
+         text-white/80 hover:text-white
+         transition-colors duration-150;
+}
+
+.nav-item i {
+  @apply text-blue-300;
+}
+
+.nav-item:hover {
+  @apply bg-blue-700/60;
+}
+
+.nav-item:hover i {
+  @apply text-white;
+}
+
+/* Active Link */
+.active-link {
+  @apply bg-blue-800/70 text-white border-r-4 border-blue-300;
+}

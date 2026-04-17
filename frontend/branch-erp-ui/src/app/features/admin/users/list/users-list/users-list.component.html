@@ -1,0 +1,286 @@
+<div class="max-w-6xl mx-auto p-6">
+
+  <!-- العنوان + زر إضافة مستخدم -->
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="text-2xl font-bold text-white tracking-wide">
+      إدارة المستخدمين والأدوار
+    </h2>
+
+    <button
+      routerLink="/admin/create-user"
+      class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-400 
+             hover:from-emerald-400 hover:to-emerald-300 transition-all duration-300
+             text-sm font-semibold text-white shadow-lg shadow-emerald-700/30">
+      + إضافة مستخدم جديد
+    </button>
+  </div>
+
+  <!-- كارت الجدول -->
+  <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-xl p-4">
+
+    <div class="overflow-x-auto rounded-xl">
+      <table class="min-w-full text-sm text-white">
+        <thead>
+          <tr class="bg-blue-900/70 text-white">
+            <th class="px-4 py-3 text-right font-semibold">اسم الدخول</th>
+            <th class="px-4 py-3 text-right font-semibold">الاسم الظاهر</th>
+            <!-- 🔥 عمود: نوع المستخدم -->
+            <th class="px-4 py-3 text-right font-semibold">نوع المستخدم</th>
+            <th class="px-4 py-3 text-center font-semibold">إجراءات</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of pagedUsers"
+              class="border-b border-white/10 hover:bg-white/10 transition-all duration-200">
+            <td class="px-4 py-3 text-right">{{ user.userName }}</td>
+            <td class="px-4 py-3 text-right">{{ user.displayName }}</td>
+            <td class="px-4 py-3 text-right">
+              {{ mapUserType(user.userType) }}
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center justify-center gap-2">
+
+                <button
+                  (click)="openUserRoles(user)"
+                  class="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 
+                         transition-all duration-300 text-xs font-semibold shadow-md">
+                  تعديل الأدوار
+                </button>
+
+                <button
+                  (click)="openUserEdit(user)"
+                  class="px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 
+                         transition-all duration-300 text-xs font-semibold shadow-md">
+                  تعديل البيانات
+                </button>
+
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-4 flex items-center justify-center gap-3 text-white text-sm">
+
+      <button
+        (click)="goToPage(currentPage - 1)"
+        [disabled]="currentPage === 1"
+        class="px-3 py-1 rounded-lg bg-white/10 disabled:opacity-40 hover:bg-white/20 transition">
+        السابق
+      </button>
+
+      <span class="px-3 py-1 bg-white/10 rounded-lg">
+        صفحة {{ currentPage }} من {{ totalPages }}
+      </span>
+
+      <button
+        (click)="goToPage(currentPage + 1)"
+        [disabled]="currentPage === totalPages"
+        class="px-3 py-1 rounded-lg bg-white/10 disabled:opacity-40 hover:bg-white/20 transition">
+        التالي
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- بانل تعديل الأدوار -->
+  <div *ngIf="selectedUser"
+       class="mt-8 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-xl p-6 
+              animate-[slideDown_0.4s_ease]">
+
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <div class="text-sm text-blue-200">تعديل أدوار المستخدم</div>
+        <div class="text-lg font-bold text-white">
+          {{ selectedUser.displayName }} ({{ selectedUser.userName }})
+        </div>
+      </div>
+
+      <button
+        (click)="closePanel()"
+        class="px-4 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 transition-all duration-300 
+               text-xs font-semibold text-white shadow-md">
+        إغلاق
+      </button>
+    </div>
+
+    <div *ngIf="isLoadingRoles" class="text-sm text-blue-200">
+      جارٍ تحميل أدوار المستخدم...
+    </div>
+
+    <div *ngIf="!isLoadingRoles"
+         class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-72 overflow-y-auto pr-2">
+
+      <div *ngFor="let role of roles"
+           class="flex items-center justify-between bg-white/10 border border-white/10 
+                  px-4 py-3 rounded-xl shadow-sm hover:bg-white/20 transition-all duration-200">
+
+        <div class="text-sm font-medium text-white">
+          {{ roleLabels[role.name] || role.name }}
+        </div>
+
+        <input
+          type="checkbox"
+          [checked]="isRoleChecked(role.name)"
+          (change)="toggleRole(role.name, $event)"
+          class="w-5 h-5 accent-emerald-400 rounded-md">
+      </div>
+
+    </div>
+
+    <div class="mt-6 flex items-center justify-between">
+      <button
+        (click)="saveUserRoles()"
+        [disabled]="isSaving"
+        class="px-6 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 
+               transition-all duration-300 text-sm font-semibold text-white shadow-lg">
+        {{ isSaving ? 'جارٍ الحفظ...' : 'حفظ أدوار المستخدم' }}
+      </button>
+
+      <div class="text-sm"
+           [ngClass]="{
+             'text-emerald-300': saveMessage.startsWith('تم'),
+             'text-rose-300': saveMessage.startsWith('حدث')
+           }">
+        {{ saveMessage }}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- بانل تعديل بيانات المستخدم -->
+  <div *ngIf="editUser"
+       class="mt-8 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-xl p-6 
+              animate-[slideDown_0.4s_ease]">
+
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <div class="text-sm text-blue-200">تعديل بيانات المستخدم</div>
+        <div class="text-lg font-bold text-white">
+          {{ editUser.displayName }} ({{ editUser.userName }})
+        </div>
+      </div>
+
+      <button
+        (click)="closeEditPanel()"
+        class="px-4 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 transition-all duration-300 
+               text-xs font-semibold text-white shadow-md">
+        إغلاق
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+      <div>
+        <label class="text-sm text-blue-200">الاسم الظاهر</label>
+        <input
+          [(ngModel)]="editModel.displayName"
+          class="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none"
+          type="text">
+      </div>
+
+      <div>
+        <label class="text-sm text-blue-200">البريد الإلكتروني</label>
+        <input
+          [(ngModel)]="editModel.email"
+          class="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none"
+          type="email">
+      </div>
+
+      <!-- 🔥 حقل اسم الدخول -->
+      <div>
+        <label class="text-sm text-blue-200">اسم الدخول</label>
+        <input
+          [(ngModel)]="editModel.userName"
+          class="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none"
+          type="text">
+      </div>
+
+      <div>
+        <label class="text-sm text-blue-200">حالة المستخدم</label>
+        <select
+          [(ngModel)]="editModel.isActive"
+          class="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none">
+          <option [ngValue]="true">نشط</option>
+          <option [ngValue]="false">غير نشط</option>
+        </select>
+      </div>
+
+      <!-- 🔥 كومبو نوع المستخدم -->
+      <div>
+        <label class="text-sm text-blue-200">نوع المستخدم</label>
+        <select
+          [(ngModel)]="editModel.userType"
+          class="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none">
+          <option [ngValue]="1">مستخدم فرع</option>
+          <option [ngValue]="2">مدير مدينة</option>
+          <option [ngValue]="3">مستخدم مركزي</option>
+          <option [ngValue]="0">غير محدد</option>
+        </select>
+      </div>
+
+      <!-- 🔥 اختيار الفرع لو مستخدم فرع -->
+      <div *ngIf="editModel.userType == 1">
+        <label class="text-sm text-blue-200">الفرع</label>
+        <select
+          [(ngModel)]="editModel.branchId"
+          class="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none">
+          <option *ngFor="let b of branches" [ngValue]="b.id">
+            {{ b.branchName }}
+          </option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- تغيير كلمة المرور (اختياري) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+      <div>
+        <label class="text-sm text-blue-200">كلمة المرور الجديدة (اختياري)</label>
+        <input
+          [(ngModel)]="editModel.newPassword"
+          class="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none"
+          type="password">
+      </div>
+
+      <div>
+        <label class="text-sm text-blue-200">تأكيد كلمة المرور الجديدة</label>
+        <input
+          [(ngModel)]="editModel.confirmNewPassword"
+          class="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none"
+          type="password">
+      </div>
+    </div>
+
+    <div class="mt-6 flex items-center justify-between">
+      <button
+        (click)="saveUserData()"
+        [disabled]="isSavingUser"
+        class="px-6 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 
+               transition-all duration-300 text-sm font-semibold text-white shadow-lg">
+        {{ isSavingUser ? 'جارٍ الحفظ...' : 'حفظ البيانات' }}
+      </button>
+
+      <div class="text-sm"
+           [ngClass]="{
+             'text-emerald-300': editMessage.startsWith('تم'),
+             'text-rose-300': editMessage.startsWith('حدث')
+           }">
+        {{ editMessage }}
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<style>
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+</style>

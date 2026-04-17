@@ -1,0 +1,87 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Projects\\BranchERP\\BranchERP.Api\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D1C05558-1273-4CA3-A5A5-78DF0B2509DF}|BranchERP.Api.csproj|c:\\projects\\brancherp\\brancherp.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1C05558-1273-4CA3-A5A5-78DF0B2509DF}|BranchERP.Api.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{31D1FB32-52C1-4131-95EB-B2E9EC63DF85}|..\\BranchERP.Infrastructure\\BranchERP.Infrastructure.csproj|c:\\projects\\brancherp\\brancherp.infrastructure\\data\\appdbcontextseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1C05558-1273-4CA3-A5A5-78DF0B2509DF}|BranchERP.Api.csproj|c:\\projects\\brancherp\\brancherp.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D1C05558-1273-4CA3-A5A5-78DF0B2509DF}|BranchERP.Api.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1C05558-1273-4CA3-A5A5-78DF0B2509DF}|BranchERP.Api.csproj|c:\\projects\\brancherp\\brancherp.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D1C05558-1273-4CA3-A5A5-78DF0B2509DF}|BranchERP.Api.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Projects\\BranchERP\\BranchERP.Api\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Projects\\BranchERP\\BranchERP.Api\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAIgAAAAAAAAAAAAQwKEAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T08:56:09.683Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AppDbContextSeed.cs",
+              "DocumentMoniker": "C:\\Projects\\BranchERP\\BranchERP.Infrastructure\\Data\\AppDbContextSeed.cs",
+              "RelativeDocumentMoniker": "..\\BranchERP.Infrastructure\\Data\\AppDbContextSeed.cs",
+              "ToolTip": "C:\\Projects\\BranchERP\\BranchERP.Infrastructure\\Data\\AppDbContextSeed.cs",
+              "RelativeToolTip": "..\\BranchERP.Infrastructure\\Data\\AppDbContextSeed.cs",
+              "ViewState": "AgIAAGcAAAAAAAAAAAAYwHoAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T08:27:17.356Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Projects\\BranchERP\\BranchERP.Api\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "appsettings.Development.json",
+              "ToolTip": "C:\\Projects\\BranchERP\\BranchERP.Api\\appsettings.Development.json",
+              "RelativeToolTip": "appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-16T07:52:14.024Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Projects\\BranchERP\\BranchERP.Api\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Projects\\BranchERP\\BranchERP.Api\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-16T06:27:29.721Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

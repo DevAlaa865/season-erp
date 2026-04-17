@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* تقدر تزود هنا global styles لو حبيت */
+
+select option {
+  color: #1e293b !important;   /* slate-800 */
+  background-color: #ffffff !important;
+}
+
+/* إجبار لون الخط داخل الـ select نفسه */
+select {
+  color: #1e293b !important;
+  background-color: #ffffff !important;
+}
+
+/* لبعض المتصفحات (Edge/Chrome) */
+select option {
+  -webkit-text-fill-color: #1e293b !important;
+}
+
