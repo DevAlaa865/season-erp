@@ -57,7 +57,7 @@ namespace BranchERP.Infrastructure.Services
                 include: q => q
                     .Include(b => b.City)
                     .Include(b => b.ActivityType)
-                    .Include(b => b.Supervisor)
+                    .Include(b => b.Supervisor!)
             );
 
             var paged = branches
@@ -82,7 +82,7 @@ namespace BranchERP.Infrastructure.Services
                 include: q => q
                     .Include(b => b.City)
                     .Include(b => b.ActivityType)
-                    .Include(b => b.Supervisor)
+                    .Include(b => b.Supervisor!)
             );
 
             var entity = branches.FirstOrDefault();
@@ -143,5 +143,22 @@ namespace BranchERP.Infrastructure.Services
 
             return ApiResponse<bool>.Ok(true, "Branch deleted successfully");
         }
+
+        public async Task<ApiResponse<IReadOnlyList<BranchDto>>> GetByCityIdAsync(int cityId)
+        {
+            var repo = _unitOfWork.Repository<Branch>();
+
+            var branches = await repo.GetAllAsync(
+                filter: b => b.CityId == cityId,
+                include: q => q
+                    .Include(b => b.City)
+                    .Include(b => b.ActivityType)
+                    .Include(b => b.Supervisor!)
+            );
+
+            var data = _mapper.Map<IReadOnlyList<BranchDto>>(branches);
+            return ApiResponse<IReadOnlyList<BranchDto>>.Ok(data);
+        }
+
     }
 }

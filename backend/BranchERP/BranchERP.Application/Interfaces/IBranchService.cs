@@ -18,5 +18,8 @@ namespace BranchERP.Application.Interfaces
         Task<ApiResponse<BranchDto>> UpdateAsync(int id, BranchCreateUpdateDto model);
 
         Task<ApiResponse<bool>> DeleteAsync(int id);
+
+        Task<ApiResponse<IReadOnlyList<BranchDto>>> GetByCityIdAsync(int cityId);
+
     }
 }

@@ -240,6 +240,179 @@ namespace BranchERP.Infrastructure.Services
             return ApiResponse<IReadOnlyList<BranchDailySummaryRowDto>>.Ok(data);
         }
 
+        /// <summary>
+        /// /تقرير لادارة المرتجعات والخصومات
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public async Task<List<ReturnsDiscountsManagementRowDto>> GetReturnsDiscountsManagementAsync(ReturnsDiscountsManagementFilterDto filter)
+        {
+            var query = _context.BranchSalesDailies
+                .Where(d => d.SalesDate >= filter.FromDate && d.SalesDate <= filter.ToDate)
+                .Where(d => !filter.CityId.HasValue || d.Branch.CityId == filter.CityId.Value)
+                .Where(d => !filter.BranchId.HasValue || d.BranchId == filter.BranchId.Value)
+                .Select(d => new
+                {
+                    d.Id,
+                    d.SalesDate,
+                    d.BranchId,
+                    BranchName = d.Branch.BranchName,
+                    Shortages = d.ShortageDetails
+                });
+
+            var result = await query
+                .Select(x => new ReturnsDiscountsManagementRowDto
+                {
+                    JournalDate = x.SalesDate,
+                    BranchId = x.BranchId,
+                    BranchName = x.BranchName,
+
+                    ReturnsAmount = x.Shortages
+                        .Where(s =>
+                            s.ShortageTypeId == 3 &&   // مرتجعات
+                            (s.IsReturnApproved == false || s.IsReturnApproved == null)
+                        )
+                        .Sum(s => s.Amount ?? 0),
+
+                    DiscountsAmount = x.Shortages
+                        .Where(s =>
+                            s.ShortageTypeId == 1 &&   // خصومات
+                            (s.IsDiscountApproved == false || s.IsDiscountApproved == null)
+                        )
+                        .Sum(s => s.Amount ?? 0),
+                })
+                .Where(r => r.ReturnsAmount > 0 || r.DiscountsAmount > 0)
+                .ToListAsync();
+
+            return result;
+        }
+
+        public async Task<List<BranchDailySummaryRowDto>> GetBranchDailySummaryAsync(BranchDailySummaryFilterDto filter)
+        {
+            var query = _context.BranchSalesDailies
+                .Include(d => d.Branch)
+                .Include(d => d.ShortageDetails)
+                    .ThenInclude(s => s.ShortageType)
+                .AsQueryable();
+
+            // الفلاتر
+            query = query.Where(d =>
+                d.SalesDate.Date >= filter.FromDate.Date &&
+                d.SalesDate.Date <= filter.ToDate.Date
+            );
+
+            if (filter.CityId.HasValue)
+                query = query.Where(d => d.Branch.CityId == filter.CityId);
+
+            if (filter.ActivityTypeId.HasValue)
+                query = query.Where(d => d.Branch.ActivityTypeId == filter.ActivityTypeId);
+
+            if (filter.BranchType != "All")
+            {
+                var type = Enum.Parse<BranchType>(filter.BranchType);
+                query = query.Where(d => d.Branch.BranchType == type);
+            }
+
+            if (filter.OnlyWithShortage)
+                query = query.Where(d => d.Difference < 0);
+
+            var data = await query
+                .GroupBy(d => new { d.BranchId, d.Branch.BranchName })
+                .Select(g => new BranchDailySummaryRowDto
+                {
+                    BranchId = g.Key.BranchId,
+                    BranchName = g.Key.BranchName,
+
+                    CashAmount = g.Sum(x => x.CashAmount ?? 0),
+                    NetworkAmount = g.Sum(x => x.NetworkAmount ?? 0),
+                    CreditAmount = g.Sum(x => x.CreditAmount ?? 0),
+
+                    TotalSales = g.Sum(x => x.TotalSales ?? 0),
+                    GrandTotal = g.Sum(x => x.GrandTotal ?? 0),
+                    Difference = g.Sum(x => x.Difference ?? 0),
+
+                    TotalShortageAmount = g
+                        .SelectMany(x => x.ShortageDetails)
+                        .Sum(s => (decimal?)s.Amount ?? 0),
+
+                    Shortages = new List<BranchShortageSummaryDto>()
+                })
+                .OrderBy(x => x.BranchName)
+                .ToListAsync();
+
+            // نجيب كل تفاصيل العجز مرة واحدة
+            var allShortages = await query
+                .SelectMany(d => d.ShortageDetails)
+                .Select(s => new
+                {
+                    s.BranchSalesDaily.BranchId,
+                    s.ShortageTypeId,
+                    ShortageTypeName = s.ShortageType.ShortageName,
+                    s.Amount
+                })
+                .ToListAsync();
+
+            // نملأ Shortages لكل فرع
+            foreach (var row in data)
+            {
+                var branchShortages = allShortages
+                    .Where(s => s.BranchId == row.BranchId)
+                    .GroupBy(s => new { s.ShortageTypeId, s.ShortageTypeName })
+                    .Select(g => new BranchShortageSummaryDto
+                    {
+                        ShortageTypeId = g.Key.ShortageTypeId,
+                        ShortageTypeName = g.Key.ShortageTypeName,
+                        Amount = g.Sum(x => (decimal?)x.Amount ?? 0)
+                    })
+                    .ToList();
+
+                row.Shortages = branchShortages;
+            }
+
+            return data;
+        }
+
+        public async Task<ApiResponse<bool>> UpdateShortagesApprovalsAsync(
+    List<ShortageApprovalUpdateDto> items)
+        {
+            if (items == null || !items.Any())
+                return ApiResponse<bool>.Fail("لا توجد بيانات للتحديث");
+
+            // نجيب الـ Ids اللي جايه من الفرونت
+            var ids = items.Select(x => x.Id).ToList();
+
+            // نجيب كل التفاصيل من الداتا بيز مرة واحدة
+            var shortages = await _context.BranchSalesShortageDetails
+                .Where(s => ids.Contains(s.Id))
+                .ToListAsync();
+
+            if (!shortages.Any())
+                return ApiResponse<bool>.Fail("لم يتم العثور على أي سجلات مطابقة");
+
+            // نعمل ماب من DTO للـ Entity
+            foreach (var shortage in shortages)
+            {
+                var dto = items.First(x => x.Id == shortage.Id);
+
+                // لو نوع العجز مرتجعات (ShortageTypeId == 3 مثلاً)
+                // أو ممكن تسيبها مفتوحة وتخلي الفرونت يتحكم
+                if (dto.IsReturnApproved.HasValue)
+                    shortage.IsReturnApproved = dto.IsReturnApproved;
+
+                if (dto.IsDiscountApproved.HasValue)
+                    shortage.IsDiscountApproved = dto.IsDiscountApproved;
+
+                if (!string.IsNullOrWhiteSpace(dto.ReturnNotes))
+                    shortage.ReturnNotes = dto.ReturnNotes;
+
+                if (!string.IsNullOrWhiteSpace(dto.DiscountNotes))
+                    shortage.DiscountNotes = dto.DiscountNotes;
+            }
+
+            await _unitOfWork.CompleteAsync();
+
+            return ApiResponse<bool>.Ok(true, "تم تحديث الاعتمادات بنجاح");
+        }
 
     }
 }

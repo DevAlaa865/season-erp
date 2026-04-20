@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Projects\\BranchERP\\BranchERP.Domain\\BranchERP.Domain.csproj",
+      "projectUniqueName": "C:\\Season-ERP\\backend\\BranchERP\\BranchERP.Domain\\BranchERP.Domain.csproj",
       "projectName": "BranchERP.Domain",
-      "projectPath": "C:\\Projects\\BranchERP\\BranchERP.Domain\\BranchERP.Domain.csproj",
+      "projectPath": "C:\\Season-ERP\\backend\\BranchERP\\BranchERP.Domain\\BranchERP.Domain.csproj",
       "packagesPath": "C:\\Users\\nasr9\\.nuget\\packages\\",
-      "outputPath": "C:\\Projects\\BranchERP\\BranchERP.Domain\\obj\\",
+      "outputPath": "C:\\Season-ERP\\backend\\BranchERP\\BranchERP.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

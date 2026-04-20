@@ -1,0 +1,99 @@
+<div class="p-4 space-y-6 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-xl text-white">
+
+  <h1 class="text-xl md:text-2xl font-bold text-white">
+    إدارة المرتجعات والخصومات
+  </h1>
+
+  <form [formGroup]="form" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+<div>
+  <label class="text-white">من تاريخ</label>
+  <input
+    type="date"
+    formControlName="fromDate"
+    class="w-full p-2 rounded bg-white text-black border border-slate-300 focus:ring-2 focus:ring-emerald-500"
+  />
+</div>
+
+
+    <div>
+      <label class="text-white">إلى تاريخ</label>
+      <input type="date" formControlName="toDate" class="w-full p-2 rounded text-black" />
+    </div>
+
+    <div class="space-y-1">
+      <label class="text-white">المدينة</label>
+    <select
+        formControlName="cityId"
+         class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white text-slate-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+         <option [ngValue]="null" disabled selected>اختر المنطقه</option>
+
+        <option *ngFor="let c of cities" [value]="c.id">
+            {{ c.cityName }}
+        </option>
+        
+        </select>
+        
+    </div>
+
+
+    
+
+    <div>
+      <label class="text-white">الفرع</label>
+      <select formControlName="branchId" 
+            class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white text-slate-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+         <option [ngValue]="null" disabled selected>اختر الفرع</option>
+        <option *ngFor="let b of branches" [value]="b.id">{{ b.branchName }}</option>
+      </select>
+    </div>
+
+  </form>
+
+  <button
+    (click)="search()"
+    class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded">
+    بحث
+  </button>
+
+  <div *ngIf="errorMessage" class="text-red-400 font-semibold">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="pagedRows.length > 0" class="overflow-x-auto text-center">
+    <table class="min-w-full bg-white rounded shadow text-black">
+      <thead class="bg-slate-200 text-slate-900 ">
+        <tr>
+          <th class="p-2">الفرع</th>
+          <th class="p-2">التاريخ</th>
+          <th class="p-2">المرتجعات</th>
+          <th class="p-2">الخصومات</th>
+          <th class="p-2">تفاصيل</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let row of pagedRows" class="border-b">
+          <td class="p-2">{{ row.branchName }}</td>
+          <td class="p-2">{{ row.journalDate }}</td>
+          <td class="p-2">{{ row.returnsAmount  }}</td>
+          <td class="p-2">{{ row.discountsAmount  }}</td>
+          <td class="p-2">
+            <button
+              (click)="openDailyDetails(row)"
+              class="text-blue-600 hover:underline">
+              عرض
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="totalPages > 1" class="flex gap-2 mt-4 text-white">
+    <button (click)="prevPage()" class="px-3 py-1 bg-slate-700 text-white rounded">السابق</button>
+    <span>صفحة {{ currentPage }} من {{ totalPages }}</span>
+    <button (click)="nextPage()" class="px-3 py-1 bg-slate-700 text-white rounded">التالي</button>
+  </div>
+
+</div>

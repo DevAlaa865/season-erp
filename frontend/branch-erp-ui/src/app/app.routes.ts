@@ -28,16 +28,21 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     canActivate: [authGuard],
     children: [
-      
+       
       {
       path: 'reports/branch-daily-summary',
       loadComponent: () =>
         import('./features/reports/branch-daily-summary-report/branch-daily-summary-report.component')
           .then(m => m.BranchDailySummaryReportComponent)
       },
-      // ============================
-      // Dashboard (صفحة الكروت)
-      // ============================
+         
+      {
+        path: 'reports/returns-discounts-management',
+        loadComponent: () =>
+          import('./features/reports/returns-discounts-management/returns-discounts-management.component')
+            .then(m => m.ReturnsDiscountsManagementComponent)
+      },
+
       {
         path: 'dashboard',
         loadComponent: () =>
@@ -45,6 +50,10 @@ export const routes: Routes = [
             .then(m => m.AdminDashboardComponent)
       },
 
+      // ============================
+      // Dashboard (صفحة الكروت)
+      // ============================
+     
       // ============================
       // Daily Sales
       // ============================
@@ -64,6 +73,7 @@ export const routes: Routes = [
       },
       {
         path: 'reports/daily-sales-inquiry',
+        
         loadComponent: () =>
           import('./features/reports/daily-sales-inquiry/daily-sales-inquiry.component')
             .then(m => m.DailySalesInquiryComponent)

@@ -19,7 +19,7 @@ namespace BranchERP.Api.Controllers
             => Ok(await _branchService.GetAllAsync());
 
         [HttpGet("paged")]
-        public async Task<IActionResult> GetPaged(
+         public async Task<IActionResult> GetPaged(
             int pageIndex = 1,
             int pageSize = 10,
             string? search = null)
@@ -40,5 +40,13 @@ namespace BranchERP.Api.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
             => Ok(await _branchService.DeleteAsync(id));
+
+        [HttpGet("by-city/{cityId}")]
+        public async Task<IActionResult> GetByCity(int cityId)
+        {
+            var result = await _branchService.GetByCityIdAsync(cityId);
+            return Ok(result);
+        }
+
     }
 }

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BranchSalesDailyService } from '../../../services/branch-sales-daily.service';
 import { MasterDataService } from '../../../services/master-data.service';
 import { AuthService } from '../../../services/auth.service';
@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
 import { DailyHeaderAttachmentService } from '../../../services/daily-header-attachment.service';
 import { ShortageAttachmentService } from '../../../services/shortage-attachment.service';
 import Swal from 'sweetalert2';
-
+import { CustomSelectComponent } from '../../../shared/custom-select/custom-select.component';
 
 @Component({
   selector: 'app-daily-sales',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,CustomSelectComponent],
   templateUrl: './daily-sales.component.html'
 })
 export class DailySalesComponent implements OnInit {
@@ -24,8 +24,10 @@ export class DailySalesComponent implements OnInit {
   branches: any[] = [];
   supervisors: any[] = [];
   employees: any[] = [];
-  shortageTypes: any[] = [];
+  employeeOptions: { id: number; name: string }[] = [];
 
+  shortageTypes: any[] = [];
+  shortageTypeOptions: { id: number; name: string }[] = [];
   filteredBranches: any[] = [];
   filteredSupervisors: any[] = [];
   filteredEmployees: any[] = [];
@@ -45,9 +47,11 @@ export class DailySalesComponent implements OnInit {
   salesDateDisplay = '';
   showSuccessPopup = false;
 
+  grandTotal=0;
   totalSales = 0;
   credit = 0;
-
+   cash=0;
+   network=0;
   constructor(
     private fb: FormBuilder,
     private dailyService: BranchSalesDailyService,
@@ -59,7 +63,6 @@ export class DailySalesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
     this.buildForm();
     this.loadLookups();
     this.setTodayDate();
@@ -82,7 +85,7 @@ preventEnter(event: Event) {
       hasShortage: [false],
       attachmentPath: ['', Validators.required],
 
-      totalSales: [{ value: 0, disabled: true }],
+      totalSales: [0, [Validators.required, Validators.min(0)]],
       cashAmount: [0, [Validators.required, Validators.min(0)]],
       networkAmount: [0, [Validators.required, Validators.min(0)]],
       creditAmount: [0, [Validators.required, Validators.min(0)]],
@@ -158,6 +161,7 @@ checkTodayExists() {
     this.master.getBranches().subscribe(res => {
       this.branches = res.data;
       this.filteredBranches = [...this.branches];
+
     });
 
     this.master.getEmployees().subscribe(res => {
@@ -166,12 +170,31 @@ checkTodayExists() {
 
       this.supervisors = this.employees.filter((x: any) => x.isSupervisor);
       this.filteredSupervisors = [...this.supervisors];
+        // 🔥 هنا بنجهز الداتا للدروب داون الموظف
+  this.employeeOptions = this.employees.map((emp: any) => ({
+    id: emp.id,
+    name: emp.fullName
+  }));
     });
 
-    this.master.getShortageTypes().subscribe(res => {
-      this.shortageTypes = res.data;
-      this.filteredShortageTypes = [...this.shortageTypes];
-    });
+      this.master.getShortageTypes().subscribe({
+        next: res => {
+
+          this.shortageTypes = res.data || [];
+          this.filteredShortageTypes = [...this.shortageTypes];
+
+          // 🔥 هنا بنعمل normalization للدروب داون
+          this.shortageTypeOptions = this.shortageTypes.map(t => ({
+            id: t.id,
+            name: t.shortageName   // ← لأن الـ API بيرجع shortageName فقط
+          }));
+
+        },
+        error: err => {
+          console.error("❌ Error loading shortage types:", err);
+        }
+      });
+
   }
 
  addShortageRow() {
@@ -307,21 +330,23 @@ onShortageFileSelected(event: Event, index: number) {
   }
 
   recalculateTotals() {
-    const cash = Number(this.form.get('cashAmount')?.value || 0);
-    const network = Number(this.form.get('networkAmount')?.value || 0);
+     this.cash = Number(this.form.get('cashAmount')?.value || 0);
+     this.network = Number(this.form.get('networkAmount')?.value || 0);
     this.credit = Number(this.form.get('creditAmount')?.value || 0);
-
-    this.totalSales = cash + network;
-    this.form.get('totalSales')?.setValue(this.totalSales, { emitEvent: false });
+     this.totalSales = Number(this.form.get('totalSales')?.value || 0);
+   
 
     this.recalculateDifference();
   }
 
   recalculateDifference() {
     this.totalSales = Number(this.form.get('totalSales')?.value || 0);
-    const grandTotal = Number(this.form.get('grandTotal')?.value || 0);
+     this.grandTotal = Number(this.form.get('grandTotal')?.value || 0);
+    this.cash = Number(this.form.get('cashAmount')?.value || 0);
+     this.network = Number(this.form.get('networkAmount')?.value || 0);
+    this.credit = Number(this.form.get('creditAmount')?.value || 0);
 
-    const diff = grandTotal - (this.totalSales + this.credit);
+    const diff = this.grandTotal - (this.cash+this.network + this.credit);
     this.form.get('difference')?.setValue(diff, { emitEvent: false });
 
     this.updateDifferenceStatus(diff);
@@ -353,12 +378,12 @@ onShortageFileSelected(event: Event, index: number) {
   }
 
 recalculateShortageEffect() {
-  const totalSales = Number(this.form.get('totalSales')?.value || 0);
-  const credit = Number(this.form.get('creditAmount')?.value || 0);
-  const grandTotal = Number(this.form.get('grandTotal')?.value || 0);
+   this.totalSales = Number(this.form.get('totalSales')?.value || 0);
+   this.credit = Number(this.form.get('creditAmount')?.value || 0);
+   this.grandTotal = Number(this.form.get('grandTotal')?.value || 0);
 
   // الفرق الأساسي قبل العجز
-  let diff =(totalSales + credit)- grandTotal ;
+  let diff =(this.cash +this.network+ this.credit)- this.grandTotal ;
 
   // طرح مجموع العجز
   let totalShortage = 0;
@@ -588,5 +613,11 @@ isDiscountType(row: AbstractControl): boolean {
   const name = type?.name || type?.shortageName || '';
   return name.includes('خصم');
 }
+getShortageControl(row: AbstractControl): FormControl {
+    return row.get('shortageTypeId') as FormControl;
+  }
 
+  getEmployeeControl(row: AbstractControl): FormControl {
+  return row.get('employeeId') as FormControl;
+}
 }

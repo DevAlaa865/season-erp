@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mBd+IL7wCOk=",
+  "dgSpecHash": "YRTq9GHoC7M=",
   "success": true,
-  "projectFilePath": "C:\\Projects\\BranchERP\\BranchERP.Application\\BranchERP.Application.csproj",
+  "projectFilePath": "C:\\Season-ERP\\backend\\BranchERP\\BranchERP.Application\\BranchERP.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nasr9\\.nuget\\packages\\automapper\\16.1.1\\automapper.16.1.1.nupkg.sha512",
     "C:\\Users\\nasr9\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",

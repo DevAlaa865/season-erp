@@ -31,6 +31,10 @@ export class BranchSalesDailyService {
 getSummaryReport(filter: any): Observable<any> {
   return this.http.post(`${this.baseUrl}/summary-report`, filter);
 }
+
+getReturnsDiscountsManagement(filter: any) {
+  return this.http.post(`${this.baseUrl}/returns-discounts-management`, filter);
+}
   getById(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
@@ -42,4 +46,9 @@ getSummaryReport(filter: any): Observable<any> {
   delete(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
+
+  updateShortagesApprovals(items: any[]) {
+  return this.http.post(`${this.baseUrl}/update-shortages-approvals`, items);
+}
+
 }

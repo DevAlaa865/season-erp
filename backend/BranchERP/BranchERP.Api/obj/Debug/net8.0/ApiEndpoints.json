@@ -343,6 +343,22 @@
   },
   {
     "ContainingType": "BranchERP.Api.Controllers.BranchController",
+    "Method": "GetByCity",
+    "RelativePath": "api/Branch/by-city/{cityId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cityId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BranchERP.Api.Controllers.BranchController",
     "Method": "GetPaged",
     "RelativePath": "api/Branch/paged",
     "HttpMethod": "GET",
@@ -549,6 +565,22 @@
   },
   {
     "ContainingType": "BranchERP.Api.Controllers.BranchSalesDailyController",
+    "Method": "GetDailySummary",
+    "RelativePath": "api/BranchSalesDaily/daily-summary-report",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filter",
+        "Type": "BranchDailySummaryFilterDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BranchERP.Api.Controllers.BranchSalesDailyController",
     "Method": "Exists",
     "RelativePath": "api/BranchSalesDaily/exists",
     "HttpMethod": "GET",
@@ -570,6 +602,22 @@
   },
   {
     "ContainingType": "BranchERP.Api.Controllers.BranchSalesDailyController",
+    "Method": "GetReturnsDiscountsManagement",
+    "RelativePath": "api/BranchSalesDaily/returns-discounts-management",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filter",
+        "Type": "BranchERP.Application.DTOs.Reports.ReturnsDiscountsManagementFilterDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BranchERP.Api.Controllers.BranchSalesDailyController",
     "Method": "GetSummaryReport",
     "RelativePath": "api/BranchSalesDaily/summary-report",
     "HttpMethod": "POST",
@@ -579,6 +627,22 @@
       {
         "Name": "filter",
         "Type": "BranchDailySummaryFilterDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BranchERP.Api.Controllers.BranchSalesDailyController",
+    "Method": "UpdateShortagesApprovals",
+    "RelativePath": "api/BranchSalesDaily/update-shortages-approvals",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "items",
+        "Type": "System.Collections.Generic.List\u00601[[BranchERP.Application.DTOs.BranchSalesDaily.ShortageApprovalUpdateDto, BranchERP.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
       }
     ],

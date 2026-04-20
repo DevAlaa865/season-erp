@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Y4bxHKSkB3g=",
+  "dgSpecHash": "ipl6WtqXIBI=",
   "success": true,
-  "projectFilePath": "C:\\Projects\\BranchERP\\BranchERP.Infrastructure\\BranchERP.Infrastructure.csproj",
+  "projectFilePath": "C:\\Season-ERP\\backend\\BranchERP\\BranchERP.Infrastructure\\BranchERP.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nasr9\\.nuget\\packages\\automapper\\16.1.1\\automapper.16.1.1.nupkg.sha512",
     "C:\\Users\\nasr9\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",

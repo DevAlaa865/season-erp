@@ -11,7 +11,7 @@ export const permissionGuard = (permission: string): CanActivateFn => {
       return true;
     }
 
-    router.navigate(['/dashboard']);
+    router.navigate(['dashboard']);
     return false;
   };
 };

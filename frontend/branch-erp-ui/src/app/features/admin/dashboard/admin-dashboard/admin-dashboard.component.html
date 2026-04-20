@@ -58,6 +58,25 @@
       </p>
     </button>
 
+        <!-- كارت ادارة المرتجعات والخصومات:  -->
+<button
+  type="button"
+     *ngIf="auth.hasPermission('Permissions.Manage') || auth.hasPermission('Finance.View') || auth.hasPermission('Returns.View')"
+  [routerLink]="['/reports/returns-discounts-management']"
+  class="group bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4 w-full text-right hover:-translate-y-1 hover:shadow-lg transition flex flex-col gap-2">
+
+  <div class="flex items-center justify-between">
+    <span class="text-sm md:text-base font-semibold text-slate-900">
+      إدارة المرتجعات والخصومات
+    </span>
+    <i class="fa fa-receipt text-amber-500 text-lg md:text-xl group-hover:scale-110 transition"></i>
+  </div>
+
+  <p class="text-xs md:text-sm text-slate-500">
+    الدخول إلى شاشة إدارة المرتجعات والخصومات.
+  </p>
+</button>
+
     <!-- كارت: استعلام -->
     <button
       type="button"
@@ -95,7 +114,8 @@
     </button>
  <button
       type="button"
-      *hasPermission="'Permissions.Manage'"
+       *ngIf="auth.hasPermission('Permissions.Manage') || auth.hasPermission('Finance.View')"
+     
       (click)="openReports()"
       class="group bg-white rounded-2xl border border-slate-200 shadow-sm p-3 md:p-4 w-full text-right hover:-translate-y-1 hover:shadow-lg transition flex flex-col gap-2">
 

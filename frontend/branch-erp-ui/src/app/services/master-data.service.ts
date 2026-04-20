@@ -242,4 +242,8 @@ searchBranchesLocal(list: any[], term: string) {
       item[field]?.toLowerCase().includes(term)
     );
   }
+getBranchesByCity(cityId: number) {
+  return this.http.get(`${this.baseUrl}/Branch/by-city/${cityId}`);
+}
+
 }

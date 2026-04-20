@@ -87,8 +87,16 @@
       <i class="fa fa-receipt w-5 mr-3"></i>
       <span class="font-semibold">يوميات الفروع</span>
     </a>
+ <!--  ادارة المرتجعات والخصومات -->
+      <a *hasPermission="'Permissions.Manage'"
 
- 
+   routerLink="/reports/returns-discounts-management"
+   routerLinkActive="active-link"
+   class="nav-item"
+   (click)="closeSidebar()">
+  <i class="fa fa-receipt w-5 mr-3"></i>
+  <span class="font-semibold">إدارة المرتجعات والخصومات</span>
+</a>
 
       <a *hasPermission="'Permissions.Manage'"
        routerLink="/dashboard" class="nav-item" (click)="closeSidebar()">

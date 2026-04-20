@@ -1,4 +1,5 @@
 ﻿using BranchERP.Application.DTOs.BranchSalesDaily;
+using BranchERP.Application.DTOs.Reports;
 using BranchERP.Application.Interfaces;
 using BranchERP.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -49,5 +50,33 @@ namespace BranchERP.Api.Controllers
             var exists = await _service.ExistsAsync(branchId, date);
             return Ok(exists);
         }
+
+        [HttpPost("daily-summary-report")]
+        public async Task<IActionResult> GetDailySummary([FromBody] BranchDailySummaryFilterDto filter)
+        {
+            var data = await _service.GetBranchDailySummaryAsync(filter);
+            return Ok(new { success = true, data });
+        }
+
+
+        [HttpPost("returns-discounts-management")]
+        public async Task<IActionResult> GetReturnsDiscountsManagement([FromBody] ReturnsDiscountsManagementFilterDto filter)
+        {
+            var data = await _service.GetReturnsDiscountsManagementAsync(filter);
+            return Ok(new { success = true, data });
+        }
+
+        [HttpPost("update-shortages-approvals")]
+        public async Task<IActionResult> UpdateShortagesApprovals(
+    [FromBody] List<ShortageApprovalUpdateDto> items)
+        {
+            var result = await _service.UpdateShortagesApprovalsAsync(items);
+
+            if (!result.Success)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
     }
 }
