@@ -20,3 +20,19 @@ select {
 select option {
   -webkit-text-fill-color: #1e293b !important;
 }
+.summary-table {
+  min-width: 900px; /* أو 1000 حسب عدد الأعمدة */
+}
+
+.summary-table th,
+.summary-table td {
+  white-space: nowrap;
+}
+::-webkit-scrollbar {
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}

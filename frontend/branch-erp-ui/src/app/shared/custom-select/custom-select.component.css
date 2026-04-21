@@ -82,3 +82,7 @@
 :host ::ng-deep .ng-dropdown-panel {
   transform: translateY(0) !important;
 }
+:host {
+  display: block;
+  min-width: 100%;
+}

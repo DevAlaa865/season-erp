@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
@@ -8,7 +8,8 @@ import { HasPermissionDirective } from '../../../../core/directives/has-permissi
   selector: 'app-admin-dashboard',
   standalone: true,
   imports: [CommonModule, HasPermissionDirective,RouterModule],
-  templateUrl: './admin-dashboard.component.html'
+  templateUrl: './admin-dashboard.component.html',
+   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AdminDashboardComponent implements OnInit {
 

@@ -44,7 +44,7 @@
       </div>
 
       <!-- المدينة -->
-      <div class="space-y-1">
+  <!--     <div class="space-y-1">
         <label class="text-sm font-medium text-slate-700">المدينة</label>
         <select formControlName="cityId"
                 class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white text-slate-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
@@ -53,7 +53,27 @@
             {{ c?.cityName }}
           </option>
         </select>
-      </div>
+      </div> -->
+<div class="space-y-1">
+ 
+
+
+  <app-custom-select
+    label="المدينة"
+    [items]="cities"
+    bindLabel="cityName"
+    bindValue="id"
+    placeholder="الكل"
+    [control]="cityIdsControl"
+    [multiple]="true"
+    [closeOnSelect]="false"
+    [searchable]="true"
+    [clearable]="true"
+    [dropdownPosition]="'bottom'">
+  </app-custom-select>
+
+
+</div>
 
       <!-- نوع النشاط -->
       <div class="space-y-1">
@@ -79,8 +99,8 @@
       <div class="flex items-center justify-end w-full mt-6 md:col-span-3">
         <button
           type="button"
-          (click)="search()"
-          [disabled]="isLoading"
+            (click)="goToResult()"
+         
           class="px-5 py-2.5 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 disabled:opacity-60 transition flex items-center gap-2">
           <i class="fa fa-magnifying-glass-chart"></i>
           <span>عرض التقرير</span>
@@ -90,189 +110,14 @@
     </form>
 
     <!-- حالة التحميل / الخطأ -->
-    <div class="mt-3">
+<!--     <div class="mt-3">
       <p *ngIf="isLoading" class="text-xs text-slate-500">جارٍ جلب بيانات التقرير...</p>
       <p *ngIf="errorMessage" class="text-xs text-red-600 font-medium">{{ errorMessage }}</p>
-    </div>
+    </div> -->
 
   </div>
 
   <!-- مكان عرض التقرير -->
-  <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 min-h-[200px]">
 
-    <!-- لو مفيش داتا -->
-    <p class="text-xs text-slate-500" *ngIf="!rows || rows.length === 0">
-      سيتم عرض جدول التقرير هنا بعد تنفيذ البحث...
-    </p>
-
-    <!-- أزرار التصدير -->
-    <div class="flex justify-end mb-4 gap-2">
-      <button
-        type="button"
-        (click)="exportToExcel()"
-        class="px-4 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700 transition flex items-center gap-2">
-        <i class="fa fa-file-excel"></i>
-        <span>تصدير Excel</span>
-      </button>
-
-      <button
-        type="button"
-        (click)="exportToPdf()"
-        class="px-4 py-2 bg-red-600 text-white rounded-lg text-sm hover:bg-red-700 transition flex items-center gap-2">
-        <i class="fa fa-file-pdf"></i>
-        <span>تصدير PDF</span>
-      </button>
-    </div>
-
-    <!-- الجدول -->
-    <div *ngIf="rows && rows.length > 0" class="overflow-x-auto mt-3">
-
-      <table 
-        dir="rtl"
-        class="min-w-full text-xs md:text-sm border border-slate-200 rounded-lg overflow-hidden text-right">
-
-        <thead class="bg-gradient-to-l from-slate-100 to-slate-200 text-slate-800 px-3 py-2 border-b whitespace-nowrap text-center font-semibold">
-          <tr class="text-center">
-
-            <!-- يظهر على الموبايل والديسكتوب -->
-            <th class="px-3 py-2 border-b whitespace-nowrap">الفرع</th>
-            <th class="px-3 py-2 border-b whitespace-nowrap">نقدية</th>
-            <th class="px-3 py-2 border-b whitespace-nowrap">شبكة</th>
-            <th class="px-3 py-2 border-b whitespace-nowrap">آجل</th>
-
-            <!-- مخفي على الموبايل -->
-            <th class="px-3 py-2 border-b whitespace-nowrap hidden md:table-cell">إجمالي البيع</th>
-            <th class="px-3 py-2 border-b whitespace-nowrap hidden md:table-cell">الإجمالي الكلي</th>
-
-            <!-- يظهر على الموبايل والديسكتوب -->
-            <th class="px-3 py-2 border-b whitespace-nowrap">قيمة العجز</th>
-
-            <!-- الأعمدة الديناميكية — مخفية على الموبايل -->
-            <th *ngFor="let st of shortageTypes"
-                class="px-3 py-2 border-b whitespace-nowrap hidden md:table-cell">
-              {{ st?.name }}
-            </th>
-
-            <!-- الفرق — مخفي على الموبايل -->
-            <th class="px-3 py-2 border-b whitespace-nowrap hidden md:table-cell">الفرق</th>
-
-            <!-- زر التفاصيل -->
-            <th class="px-3 py-2 border-b whitespace-nowrap text-center">تفاصيل</th>
-
-          </tr>
-        </thead>
-
-        <tbody>
-
-          <tr *ngFor="let row of pagedRows ; trackBy: trackByBranch" class="hover:bg-slate-50 text-center">
-
-            <!-- يظهر على الموبايل والديسكتوب -->
-            <td class="px-3 py-2 border-b whitespace-nowrap font-medium text-slate-800">
-              {{ row.branchName }}
-            </td>
-
-            <td class="px-3 py-2 border-b whitespace-nowrap text-slate-800">
-              {{ row.cashAmount | number:'1.2-2' }}
-            </td>
-
-            <td class="px-3 py-2 border-b whitespace-nowrap text-slate-800">
-              {{ row.networkAmount | number:'1.2-2' }}
-            </td>
-
-            <td class="px-3 py-2 border-b whitespace-nowrap text-slate-800">
-              {{ row.creditAmount | number:'1.2-2' }}
-            </td>
-
-            <!-- مخفي على الموبايل -->
-            <td class="px-3 py-2 border-b whitespace-nowrap font-semibold text-slate-800 hidden md:table-cell">
-              {{ row.totalSales | number:'1.2-2' }}
-            </td>
-
-            <td class="px-3 py-2 border-b whitespace-nowrap font-semibold text-slate-800 hidden md:table-cell">
-              {{ row.grandTotal | number:'1.2-2' }}
-            </td>
-
-            <!-- يظهر على الموبايل والديسكتوب -->
-            <td class="px-3 py-2 border-b whitespace-nowrap text-red-600 font-semibold">
-              {{ row.totalShortageAmount | number:'1.2-2' }}
-            </td>
-
-            <!-- الأعمدة الديناميكية — مخفية على الموبايل -->
-            <td *ngFor="let st of shortageTypes"
-                class="px-3 py-2 border-b whitespace-nowrap text-slate-800 hidden md:table-cell">
-              {{
-                (row.shortages | shortByType: (st?.id ?? 0))?.amount || 0
-                  | number:'1.2-2'
-              }}
-            </td>
-
-            <!-- الفرق — مخفي على الموبايل -->
-            <td class="px-3 py-2 border-b whitespace-nowrap font-semibold hidden md:table-cell"
-                [ngClass]="{
-                  'text-red-600': row.difference < 0,
-                  'text-emerald-600': row.difference > 0,
-                  'text-slate-600': row.difference === 0
-                }">
-              {{ row.difference | number:'1.2-2' }}
-            </td>
-
-            <!-- زر التفاصيل -->
-            <td class="px-3 py-2 border-b whitespace-nowrap text-center">
-              <div
-                (click)="openDailyDetails(row)"
-                class="px-4 py-1.5 rounded-full bg-emerald-600 text-white text-xs md:text-sm font-semibold
-                      hover:bg-emerald-700 transition shadow-sm border border-emerald-700 cursor-pointer select-none">
-                تفاصيل اليومية
-              </div>
-            </td>
-
-          </tr>
-
-        </tbody>
-
-      </table>
-
-      <!-- الباجينيشن -->
-      <div *ngIf="rows && rows.length > 0"
-          class="flex flex-col md:flex-row items-center justify-between gap-3 mt-4 text-xs md:text-sm">
-
-        <div class="text-slate-600">
-          صفحة {{ currentPage }} من {{ totalPages }}
-          (إجمالي {{ rows.length }} صف)
-        </div>
-
-        <div class="flex items-center gap-1">
-          <button
-            type="button"
-            class="px-3 py-1 rounded-lg border text-slate-700 bg-white hover:bg-slate-100 disabled:opacity-50"
-            (click)="prevPage()"
-            [disabled]="currentPage === 1">
-            السابق
-          </button>
-
-          <ng-container *ngFor="let p of [].constructor(totalPages); let i = index">
-            <button
-              type="button"
-              class="px-3 py-1 rounded-lg border text-slate-700 bg-white hover:bg-slate-100"
-              [ngClass]="{ 'bg-blue-600 text-white border-blue-600': currentPage === (i + 1) }"
-              (click)="goToPage(i + 1)">
-              {{ i + 1 }}
-            </button>
-          </ng-container>
-
-          <button
-            type="button"
-            class="px-3 py-1 rounded-lg border text-slate-700 bg-white hover:bg-slate-100 disabled:opacity-50"
-            (click)="nextPage()"
-            [disabled]="currentPage === totalPages">
-            التالي
-          </button>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
 
 </div>

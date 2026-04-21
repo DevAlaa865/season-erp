@@ -35,6 +35,12 @@ export const routes: Routes = [
         import('./features/reports/branch-daily-summary-report/branch-daily-summary-report.component')
           .then(m => m.BranchDailySummaryReportComponent)
       },
+       {
+    path: 'reports/branch-daily-summary/result',
+      loadComponent: () =>
+        import('./features/reports/branch-daily-summary-result/branch-daily-summary-result.component')
+          .then(m => m.BranchDailySummaryResultComponent)
+  },
          
       {
         path: 'reports/returns-discounts-management',

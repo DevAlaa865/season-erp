@@ -1,175 +1,141 @@
-<div class="relative min-h-screen flex bg-gradient-to-br from-[#0a1a3d] via-[#0f2a5f] to-[#1e3a8a] text-white overflow-hidden">
+<div class="flex h-screen overflow-hidden">
 
-  <!-- BACKGROUND LAYERS -->
-  <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute inset-0 bg-gradient-to-br from-[#0a1a3d] via-[#0f2a5f] to-[#1e3a8a] opacity-90"></div>
+  <!-- Sidebar -->
+  <aside id="sidebar"
+         class="w-[280px] bg-surface border-r border-custom flex flex-col h-full absolute z-30 md:relative transform -translate-x-full md:translate-x-0 shadow-lg md:shadow-none transition-transform duration-300"
+         [ngClass]="{ 'translate-x-0': isSidebarOpen }">
 
-    <!-- Blur circles (responsive) -->
-    <div class="absolute top-[-20%] right-[-10%] w-[200px] h-[200px] md:w-[500px] md:h-[500px] bg-blue-500/20 rounded-full blur-[100px] md:blur-[150px]"></div>
-    <div class="absolute bottom-[-10%] left-[-10%] w-[180px] h-[180px] md:w-[450px] md:h-[450px] bg-indigo-500/20 rounded-full blur-[100px] md:blur-[150px]"></div>
-    <div class="absolute top-[40%] left-[30%] w-[150px] h-[150px] md:w-[350px] md:h-[350px] bg-cyan-400/20 rounded-full blur-[80px] md:blur-[130px]"></div>
+    <!-- Logo -->
+    <div class="h-[80px] flex items-center px-6 border-b border-custom shrink-0">
+      <div class="flex items-center gap-3 text-primary-custom">
+        <div class="w-10 h-10 rounded-xl bg-[var(--primary)] text-white flex items-center justify-center shadow-md">
+          <iconify-icon icon="solar:graduation-hat-bold-duotone" width="24"></iconify-icon>
+        </div>
+        <div>
+          <h2 class="text-[1.25rem] leading-tight m-0 tracking-tight text-main">SEASON</h2>
+          <span class="text-[0.65rem] font-bold text-[var(--text-tertiary)] uppercase tracking-widest block">Admin Portal</span>
+        </div>
+      </div>
 
-    <svg class="absolute inset-0 opacity-[0.05]" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="chart" width="120" height="120" patternUnits="userSpaceOnUse">
-          <path d="M 0 120 L 120 0" stroke="#93c5fd" stroke-width="0.4" />
-          <circle cx="20" cy="100" r="3" fill="#60a5fa" />
-          <circle cx="60" cy="60" r="3" fill="#38bdf8" />
-          <circle cx="100" cy="20" r="3" fill="#facc15" />
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#chart)" />
-    </svg>
-  </div>
-
-  <!-- OVERLAY (Mobile Only) -->
-  <div
-    *ngIf="isSidebarOpen"
-    (click)="closeSidebar()"
-    class="fixed inset-0 bg-black/40 z-30 md:hidden animate-fade-in">
-  </div>
-
-  <!-- SIDEBAR -->
-  <aside
-    class="
-      fixed md:static
-      top-0 right-0
-      h-full md:h-auto md:min-h-screen
-      w-64
-      bg-blue-900/50 backdrop-blur-2xl border-l border-blue-700
-      shadow-2xl
-      z-40
-      transform transition-transform duration-300
-      translate-x-full
-      md:translate-x-0 md:transform-none
-      flex flex-col
-    "
-    [ngClass]="{
-      'translate-x-0 animate-slide-in-right': isSidebarOpen
-    }"
-  >
-
-    <!-- LOGO -->
-    <div class="h-24 flex items-center justify-center border-b border-blue-700/70">
-      <img
-        src="assets/logo/season-logo.png"
-        alt="Season Logo"
-        class="w-40 mx-auto drop-shadow-[0_0_18px_rgba(255,255,255,0.95)] brightness-150 contrast-125"
-      />
+      <!-- Mobile Close Btn -->
+      <button class="md:hidden ml-auto btn-icon text-main" (click)="toggleSidebar()">
+        <iconify-icon icon="solar:close-circle-bold-duotone" width="24"></iconify-icon>
+      </button>
     </div>
 
-    <!-- NAV -->
-    <nav class="flex-1 overflow-y-auto py-5 space-y-1 text-sm">
+    <!-- Navigation -->
+    <div class="flex-1 overflow-y-auto py-6 px-4 flex flex-col gap-1">
 
- <!-- لوحة التحكم -->
-<a    *hasPermission="'Permissions.Manage'"
-   routerLink="/dashboard"
-   routerLinkActive="active-link "
-   class="nav-item"
-   (click)="closeSidebar()">
-  <i class="fa fa-chart-line w-5 mr-3"></i>
-  <span class="font-semibold ">لوحة التحكم</span>
-</a>
+      <div class="text-caption px-4 mb-3">القائمة الرئيسية</div>
 
-      <a    *hasPermission="'Permissions.Manage'"
-         routerLink="/dashboard"
+      <a routerLink="/dashboard"
+         routerLinkActive="active"
          class="nav-item"
          (click)="closeSidebar()">
-        <i class="fa fa-store w-5 mr-3"></i>
-        <span class="font-semibold">إدارة الفروع</span>
-      </a>
-    <!-- يومية المبيعات -->
-    <a *hasPermission="'dashbord.dailysails'"
-      routerLink="/dashboard"
-      routerLinkActive="active-link"
-      class="nav-item"
-      (click)="closeSidebar()">
-      <i class="fa fa-receipt w-5 mr-3"></i>
-      <span class="font-semibold">يوميات الفروع</span>
-    </a>
- <!--  ادارة المرتجعات والخصومات -->
-      <a *hasPermission="'Permissions.Manage'"
-
-   routerLink="/reports/returns-discounts-management"
-   routerLinkActive="active-link"
-   class="nav-item"
-   (click)="closeSidebar()">
-  <i class="fa fa-receipt w-5 mr-3"></i>
-  <span class="font-semibold">إدارة المرتجعات والخصومات</span>
-</a>
-
-      <a *hasPermission="'Permissions.Manage'"
-       routerLink="/dashboard" class="nav-item" (click)="closeSidebar()">
-        <i class="fa fa-coins w-5 mr-3"></i>
-        <span class="font-semibold">المالية</span>
+        <iconify-icon icon="solar:home-2-bold-duotone"></iconify-icon>
+        <span>لوحة التحكم</span>
       </a>
 
-      <a *hasPermission="'Permissions.Manage'"
-      routerLink="/dashboard" class="nav-item" (click)="closeSidebar()">
-        <i class="fa fa-shield-halved w-5 mr-3"></i>
-        <span class="font-semibold">الرقابة</span>
+      <a routerLink="/branches/daily-sales"
+         routerLinkActive="active"
+         class="nav-item"
+         (click)="closeSidebar()">
+        <iconify-icon icon="solar:receipt-bold-duotone"></iconify-icon>
+        <span>يوميات الفروع</span>
       </a>
 
-      <a  *hasPermission="'Permissions.Manage'" 
-      routerLink="/dashboard" class="nav-item" (click)="closeSidebar()">
-        <i class="fa fa-user-shield w-5 mr-3"></i>
-        <span class="font-semibold">الإدارة العامة</span>
+      <a routerLink="/reports/returns-discounts-management"
+         routerLinkActive="active"
+         class="nav-item"
+         (click)="closeSidebar()">
+        <iconify-icon icon="solar:chart-2-bold-duotone"></iconify-icon>
+        <span>إدارة المرتجعات والخصومات</span>
       </a>
 
-    </nav>
+      <a routerLink="/reports/branch-daily-summary"
+         routerLinkActive="active"
+         class="nav-item"
+         (click)="closeSidebar()">
+        <iconify-icon icon="solar:chart-square-bold-duotone"></iconify-icon>
+        <span>تقرير يوميات الفروع</span>
+      </a>
 
-    <!-- FOOTER -->
-    <div class="h-14 border-t border-blue-700/70 flex items-center justify-center text-[11px] text-blue-200/80">
-      © {{ currentYear }} SEASON LIFE STYLE
     </div>
+
+    <!-- User Profile -->
+    <div class="p-5 border-t border-custom shrink-0 bg-[var(--bg)] m-4 rounded-xl">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-primary-custom border-2 border-surface shadow-sm"
+             style="background-color: var(--primary-light);">
+          {{ userName?.charAt(0) }}
+        </div>
+
+        <div class="flex-1 overflow-hidden">
+          <div class="text-sm font-bold truncate text-[var(--text-main)]">{{ userName }}</div>
+          <div class="text-xs font-medium text-[var(--text-tertiary)] truncate">{{ roles[0] }}</div>
+        </div>
+
+        <button class="btn-icon text-danger hover:bg-danger-light w-8 h-8" (click)="logout()">
+          <iconify-icon icon="solar:logout-bold-duotone" width="20"></iconify-icon>
+        </button>
+      </div>
+    </div>
+
   </aside>
 
-  <!-- MAIN CONTENT -->
-  <div class="relative flex-1 flex flex-col z-10">
-
-    <!-- HEADER -->
-    <header
-      class="h-16 border-b border-blue-700/70 flex items-center justify-between px-4 md:px-6 bg-blue-900/40 backdrop-blur-xl shadow-md">
-
-      <!-- MOBILE MENU BUTTON -->
-      <button
-        (click)="toggleSidebar()"
-        class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-800/80 shadow-lg">
-        <i class="fa fa-bars text-white text-lg"></i>
-      </button>
-
-      <h1 class="text-sm md:text-lg font-semibold tracking-wide text-white">
-     منصه SEASON
-
-      </h1>
-
-<div class="flex items-center gap-3 text-[11px] md:text-sm">
-  <div class="text-right leading-tight">
-
-    <!-- اسم المستخدم -->
-    <div class="font-semibold text-white">{{ userName }}</div>
-
-    <!-- اسم الفرع -->
-    <div class="text-blue-200/90">{{ branchName }}</div>
-
-    <!-- الرول -->
-    <div class="text-blue-300/90">{{ roles[0] }}</div>
-
+  <!-- Overlay for mobile -->
+  <div id="mobile-overlay"
+       class="fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm z-20 md:hidden"
+       [class.hidden]="!isSidebarOpen"
+       (click)="closeSidebar()">
   </div>
 
-  <button
-    (click)="logout()"
-    class="px-3 py-1.5 rounded-full bg-gradient-to-r from-rose-500 to-rose-400 hover:from-rose-400 hover:to-rose-300 transition text-[11px] md:text-xs font-medium text-white shadow-md">
-    تسجيل الخروج
-  </button>
-</div>
+  <!-- Main Content -->
+  <div class="relative flex-1 flex flex-col z-10">
+
+    <!-- Header -->
+    <header class="h-[80px] bg-surface border-b border-custom flex items-center justify-between px-6 shrink-0 z-10 sticky top-0">
+
+      <div class="flex items-center gap-4">
+        <button class="btn-icon md:hidden text-[var(--text-main)]" (click)="toggleSidebar()">
+          <iconify-icon icon="solar:hamburger-menu-bold-duotone" width="26"></iconify-icon>
+        </button>
+
+        <div>
+          <h3 class="m-0 leading-tight hidden sm:block tracking-tight text-[var(--text-main)]">
+            لوحة التحكم
+          </h3>
+          <div class="text-xs font-semibold text-[var(--text-tertiary)] hidden sm:block mt-0.5 uppercase tracking-wide">
+            منصة SEASON
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 sm:gap-5">
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle"
+                class="btn-icon bg-[var(--bg)] rounded-full hover:bg-[var(--border)]"
+                (click)="toggleTheme()">
+        </button>
+
+        <!-- Notifications -->
+        <button class="btn-icon relative bg-[var(--bg)] rounded-full hover:bg-[var(--border)]">
+          <iconify-icon icon="solar:bell-bold-duotone" width="22" class="text-[var(--text-main)]"></iconify-icon>
+          <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-[#DC3545] rounded-full border-2 border-surface"></span>
+        </button>
+
+      </div>
 
     </header>
 
-    <!-- PAGE CONTENT -->
-    <main class="flex-1 p-3 md:p-6 lg:p-8 animate-fade-in">
-      <router-outlet></router-outlet>
-    </main>
+    <!-- Page Content -->
+<main class="flex-1 p-3 md:p-6 lg:p-8 animate-fade-in">
+  <div id="main-scroll-area" class="flex-1 overflow-y-auto p-5 sm:p-8">
+    <router-outlet></router-outlet>
+  </div>
+</main>
 
   </div>
+
 </div>
