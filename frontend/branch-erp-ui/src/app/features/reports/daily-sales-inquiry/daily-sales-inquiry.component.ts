@@ -81,7 +81,7 @@ selectedBranch: any = null;
 
   constructor(
     private fb: FormBuilder,
-    private auth: AuthService,
+    public auth: AuthService,
     private branchSalesDailyService: BranchSalesDailyService,
     private master: MasterDataService,
     private router: Router,
@@ -103,8 +103,15 @@ selectedBranch: any = null;
     this.userInfo = this.auth.getUserInfo();
 
     // ✔ فقط اللي معاه صلاحية تعديل المرتجعات/الخصومات
-    this.canApproveShortages = this.auth.hasPermission('Returns.View');
+   /*  this.canApproveShortages = this.auth.hasPermission('Returns.View') ; */
 
+const editPermissions = [
+  'Returns.View',
+
+  'Discounts.View'
+];
+
+this.canApproveShortages = editPermissions.some(p => this.auth.hasPermission(p));
     // لو المستخدم فرع
     if (this.userInfo && this.userInfo.branchId) {
       this.isBranchUser = true;

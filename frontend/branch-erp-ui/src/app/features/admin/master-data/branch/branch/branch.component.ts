@@ -8,7 +8,8 @@ import { MasterDataService } from '../../../../../services/master-data.service';
   selector: 'app-branch',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  templateUrl: './branch.component.html'
+  templateUrl: './branch.component.html',
+  styleUrl: './branch.component.css',
 })
 export class BranchComponent implements OnInit {
 

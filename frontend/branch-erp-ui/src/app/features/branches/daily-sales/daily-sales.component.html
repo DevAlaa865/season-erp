@@ -2,10 +2,7 @@
 
   <!-- هيدر اليومية -->
 <!-- هيدر اليومية -->
-<div class="bg-white/90 backdrop-blur-xl p-4 rounded-2xl shadow-lg border border-blue-200">
-
-  <!-- زر الرجوع -->
-  <div class="flex justify-start mb-2">
+<div class="bg-gradient-to-br from-blue-50 via-purple-50 to-blue-50 backdrop-blur-xl p-4 rounded-2xl shadow-lg border border-blue-200">  <div class="flex justify-start mb-2">
     <button
       (click)="goBackToDashboard()"
       class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md transition text-sm font-medium">
@@ -24,17 +21,26 @@
     </label>
   </div>
 
-  <h2 class="text-xl font-bold text-blue-400 mb-2text-slate-900 flex items-center gap-2 mb-2">
-    <i class="fa fa-receipt text-blue-500"></i>
-    <span>يومية مبيعات الفرع</span>
-  </h2>
+<h2 class="text-xl font-bold text-blue-400 flex items-center gap-2 mb-2">
+  <i class="fa fa-receipt text-blue-500"></i>
+  <span>يومية مبيعات الفرع</span>
+</h2>
+
+<!-- التنبيه -->
+<div class="w-full flex justify-center m-2">
+  <div class="bg-amber-100 border border-amber-300 text-amber-800 px-6 py-3 rounded-xl shadow-sm text-center text-base font-semibold flex items-center gap-2">
+    <i class="fa fa-exclamation-triangle text-amber-600 text-lg"></i>
+    <span>يرجى تعبئة اليومية وفقًا للتقرير اليومي</span>
+  </div>
+</div>
+
 
   <!-- الصف الأول: التاريخ + الفرع + المشرف -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-blue-100 p-4 rounded-xl border border-blue-200 shadow-sm">
 
     <!-- التاريخ -->
     <div class="space-y-1">
-      <label class="block text-base text-slate-700 mb-1">التاريخ</label>
+      <label class="block text-base text-slate-700 mb-1 ">التاريخ</label>
       <div class="flex items-center gap-2 rounded-lg border border-blue-200 bg-white/20 px-3 py-2 shadow-sm">
         <i class="fa fa-calendar text-blue-500 text-base"></i>
         <input type="date"
@@ -78,7 +84,7 @@
 
       <!-- نقدية -->
       <div class="space-y-1">
-        <label class="block text-base text-slate-700 mb-1">نقدية</label>
+        <label class="block text-base text-slate-700 mb-1 text-[var(--text)]">نقدية</label>
         <div class="flex items-center gap-2 rounded-lg border border-emerald-300 bg-white/20 px-3 py-2 shadow-sm">
           <i class="fa fa-money-bill-wave text-emerald-600 text-base"></i>
           <input type="number"
@@ -90,7 +96,7 @@
 
       <!-- شبكة -->
       <div class="space-y-1">
-        <label class="block text-base text-slate-700 mb-1">شبكة</label>
+        <label class="block text-base text-slate-700 mb-1 text-[var(--text)]">شبكة</label>
         <div class="flex items-center gap-2 rounded-lg border border-sky-300 bg-white/20 px-3 py-2 shadow-sm">
           <i class="fa fa-credit-card text-sky-600 text-base"></i>
           <input type="number"
@@ -102,7 +108,7 @@
 
       <!-- آجل -->
       <div class="space-y-1">
-        <label class="block text-base text-slate-700 mb-1">آجل / Credit</label>
+        <label class="block text-base text-slate-700 mb-1 text-[var(--text)]">آجل / Credit</label>
         <div class="flex items-center gap-2 rounded-lg border border-amber-300 bg-white/20 px-3 py-2 shadow-sm">
           <i class="fa fa-file-invoice-dollar text-amber-600 text-base"></i>
           <input type="number"
@@ -126,7 +132,7 @@
 
       <!-- إجمالي عدد الفواتير -->
       <div class="space-y-1">
-        <label class="block text-base text-slate-700 mb-1">إجمالي عدد الفواتير</label>
+        <label class="block text-base text-slate-700 mb-1 text-[var(--text)]">إجمالي عدد الفواتير</label>
         <div class="flex items-center gap-2 rounded-lg border border-blue-200 bg-white/20 px-3 py-2 shadow-sm">
           <i class="fa fa-file-invoice text-blue-500 text-base"></i>
           <input type="number"
@@ -151,7 +157,7 @@
       <!-- إجمالي البيع -->
       <div class="space-y-1">
         <label class="block text-base text-slate-700 mb-1">إجمالي البيع</label>
-        <div class="flex items-center gap-2 rounded-lg border border-blue-300 bg-blue-50 px-3 py-2 shadow-sm">
+        <div class="flex items-center gap-2 rounded-lg border border-blue-300 bg-blue-100 px-3 py-2 shadow-sm">
           <i class="fa fa-sack-dollar text-blue-500 text-base"></i>
           <input type="number"
                  formControlName="totalSales"
@@ -163,8 +169,7 @@
       <!-- الإجمالي الكلي -->
       <div class="space-y-1">
         <label class="block text-base text-slate-700 mb-1">الإجمالي الكلي</label>
-        <div class="flex items-center gap-2 rounded-lg border border-purple-300 bg-white/20 px-3 py-2 shadow-sm">
-          <i class="fa fa-calculator text-purple-600 text-base"></i>
+        <div class="flex items-center gap-2 rounded-lg border border-purple-300 bg-blue-50 px-3 py-2 shadow-sm">            <i class="fa fa-calculator text-purple-600 text-base"></i>
           <input type="number"
                  formControlName="grandTotal"
                  placeholder="الرجاء إدخال الإجمالي الكلي"
@@ -330,17 +335,19 @@
 
 
 
-          <!-- مرفق -->
-          <div class="space-y-1">
-            <label class="block text-base text-slate-700 mb-1">مرفق</label>
-            <input type="file"
-                   (change)="onShortageFileSelected($event, i)"
-                   class="w-full rounded-lg border border-blue-200 bg-white/20 px-3 py-2 text-base text-slate-800">
-            <p *ngIf="row.get('attachmentPath')?.touched && row.get('attachmentPath')?.invalid"
-               class="text-red-600 text-xs mt-1 font-medium">
-              الرجاء إرفاق مرفق العجز
-            </p>
-          </div>
+    <div class="space-y-1">
+  <label class="block text-base text-slate-700 mb-1">مرفق</label>
+  <div class="flex items-center gap-2 rounded-lg border border-blue-200 bg-white/20 px-3 py-2 shadow-sm">
+    <input type="file"
+           (change)="onShortageFileSelected($event, i)"
+           class="w-full text-base text-slate-800">
+  </div>
+  <p *ngIf="row.get('attachmentPath')?.touched && row.get('attachmentPath')?.invalid"
+     class="text-red-600 text-xs mt-1 font-medium">
+    الرجاء إرفاق مرفق العجز
+  </p>
+</div>
+
 
         </div>
 

@@ -49,7 +49,10 @@
   </div>
 
   <!-- الجدول -->
-  <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm">
+<div class="rounded-2xl p-4 shadow-xl backdrop-blur-xl
+            bg-[var(--panel-bg)]
+            border border-[var(--panel-border)]
+            text-[var(--text)]">
     <div class="flex items-center justify-between mb-3">
       <h2 class="text-sm font-semibold text-slate-800">
         قائمة الصلاحيات
@@ -59,7 +62,7 @@
 
     <table class="w-full text-sm">
       <thead>
-        <tr class="text-left text-xs text-slate-500 border-b">
+       <tr class="text-left text-xs text-[var(--table-head-text)] border-b border-[var(--table-border)]">
           <th class="py-2">#</th>
           <th>الاسم</th>
           <th>الكود</th>
@@ -67,13 +70,33 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let p of permissions; let i = index" class="border-b">
-          <td class="py-2">{{ i + 1 }}</td>
-          <td>{{ p.name }}</td>
-          <td class="font-mono text-xs">{{ p.code }}</td>
-          <td class="space-x-2">
-            <button (click)="startEdit(p)" class="text-blue-600 text-xs">تعديل</button>
-            <button (click)="delete(p)" class="text-rose-600 text-xs">حذف</button>
+        <tr *ngFor="let p of permissions; let i = index" class="border-b border-[var(--table-border)] hover:bg-[var(--table-row-hover)] transition">
+          <td class="py-2 ">{{ i + 1 }}</td>
+          <td class="text-[var(--text)]">{{ p.name }}</td>
+          <td class="font-mono text-xs text-[var(--text)]">{{ p.code }}</td>
+          <td class="space-x-2 text-[var(--text)]">
+                  <button
+            (click)="startEdit(p)"
+            class="px-3 py-1 rounded-md text-xs font-semibold
+                  bg-[var(--btn-blue-bg)]
+                  border border-[var(--btn-blue-border)]
+                  text-[var(--btn-text)]
+                  hover:bg-[var(--btn-blue-hover)]
+                  transition-all duration-300 shadow-sm shadow-black/10">
+            تعديل
+          </button>
+
+          <button
+            (click)="delete(p)"
+            class="px-3 py-1 rounded-md text-xs font-semibold
+                  bg-[var(--btn-red-bg)]
+                  border border-[var(--btn-red-border)]
+                  text-[var(--btn-text)]
+                  hover:bg-[var(--btn-red-hover)]
+                  transition-all duration-300 shadow-sm shadow-black/10">
+            حذف
+          </button>
+
           </td>
         </tr>
       </tbody>

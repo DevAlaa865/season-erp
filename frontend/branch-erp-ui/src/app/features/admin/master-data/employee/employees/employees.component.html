@@ -1,8 +1,8 @@
-<div class="p-6 space-y-6 bg-rose-300">
+<div class="p-6 space-y-6 bg-blue-300">
 
   <!-- العنوان + زر الإضافة -->
-  <div class="flex items-center justify-between">
-    <h1 class="text-2xl font-bold text-white">إدارة الموظفين</h1>
+  <div class="flex items-center justify-between ">
+    <h1 class="text-2xl font-bold text-[var(--text)] ">إدارة الموظفين</h1>
 
     <button
       class="bg-red-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-sm shadow-md transition"
@@ -115,66 +115,99 @@
 
   </div>
   
+<div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden" dir="rtl">
 
-  <!-- جدول الموظفين -->
-  <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+  <div *ngIf="pagedEmployees.length === 0" class="p-10 text-center text-black text-sm">
+    لا توجد نتائج مطابقة.
+  </div>
 
-    <div *ngIf="pagedEmployees.length === 0" class="p-10 text-center text-black text-sm">
-      لا توجد نتائج مطابقة.
-    </div>
+  <table *ngIf="pagedEmployees.length > 0" class="w-full text-right text-sm">
+    <thead class="bg-blue-100 text-black">
+      <tr>
+        <th class="px-4 py-3 text-right">الكود</th>
+        <th class="px-4 py-3 text-right">الاسم</th>
+        <th class="px-4 py-3 text-right">الهاتف</th>
+        <th class="px-4 py-3 text-right">النوع</th>
+        <th class="px-4 py-3 text-right">الوظيفة</th>
+        <th class="px-4 py-3 text-right">مشرف؟</th>
+        <th class="px-4 py-3 text-right">نشط؟</th>
+        <th class="px-4 py-3 text-right">إجراءات</th>
+      </tr>
+    </thead>
 
-    <table *ngIf="pagedEmployees.length > 0" class="w-full text-right text-sm">
-      <thead class="bg-blue-100 text-black">
-        <tr>
-          <th class="p-3">الكود</th>
-          <th class="p-3">الاسم</th>
-          <th class="p-3">الهاتف</th>
-          <th class="p-3">النوع</th>
-          <th class="p-3">الوظيفة</th>
-          <th class="p-3">مشرف؟</th>
-          <th class="p-3">نشط؟</th>
-          <th class="p-3 text-right">إجراءات</th>
-        </tr>
-      </thead>
+    <tbody>
+      <tr *ngFor="let item of pagedEmployees"
+          class="border-b hover:bg-blue-50 transition">
 
-      <tbody>
-        <tr *ngFor="let item of pagedEmployees"
-            class="border-b hover:bg-blue-50 transition">
+        <td class="px-4 py-3 font-semibold text-black">{{ item.employeeCode }}</td>
+        <td class="px-4 py-3 font-medium text-black">{{ item.fullName }}</td>
+        <td class="px-4 py-3 text-black">{{ item.phone }}</td>
+        <td class="px-4 py-3 text-black">{{ item.gender === 'Male' ? 'ذكر' : 'أنثى' }}</td>
+        <td class="px-4 py-3 text-black">{{ item.position }}</td>
+        <td class="px-4 py-3 text-black">{{ item.isSupervisor ? 'نعم' : 'لا' }}</td>
+        <td class="px-4 py-3 text-black">{{ item.isActive ? 'نعم' : 'لا' }}</td>
 
-          <td class="p-3 font-semibold text-black">{{ item.employeeCode }}</td>
-          <td class="p-3 font-medium text-black">{{ item.fullName }}</td>
-          <td class="p-3 text-black">{{ item.phone }}</td>
-          <td class="p-3 text-black">{{ item.gender === 'Male' ? 'ذكر' : 'أنثى' }}</td>
-          <td class="p-3 text-black">{{ item.position }}</td>
-          <td class="p-3 text-black">{{ item.isSupervisor ? 'نعم' : 'لا' }}</td>
-          <td class="p-3 text-black">{{ item.isActive ? 'نعم' : 'لا' }}</td>
-
-          <td class="p-3 flex gap-3 justify-end">
+        <td class="px-4 py-3 flex gap-3 justify-end">
           <button
             class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition shadow-sm"
             (click)="showDetails(item)">
             تفاصيل
           </button>
-            <button
-              class="px-3 py-1.5 rounded-lg bg-slate-100 text-black hover:bg-slate-200 transition shadow-sm"
-              (click)="edit(item)">
-              تعديل
-            </button>
 
-            <button
-              class="px-3 py-1.5 rounded-lg bg-rose-600 text-white hover:bg-rose-700 transition shadow-sm"
-              (click)="remove(item)">
-              حذف
-            </button>
+          <button
+            class="px-3 py-1.5 rounded-lg bg-slate-100 text-black hover:bg-slate-200 transition shadow-sm"
+            (click)="edit(item)">
+            تعديل
+          </button>
 
-          </td>
+          <button
+            class="px-3 py-1.5 rounded-lg bg-rose-600 text-white hover:bg-rose-700 transition shadow-sm"
+            (click)="remove(item)">
+            حذف
+          </button>
+        </td>
 
-        </tr>
-      </tbody>
+      </tr>
+    </tbody>
 
-    </table>
+  </table>
+<!-- Pagination -->
+<div class="flex items-center justify-between p-4 text-sm select-none">
 
+  <!-- زر السابق -->
+  <button
+    class="px-3 py-1.5 rounded-lg bg-slate-100 text-black hover:bg-slate-200 transition disabled:opacity-40"
+    [disabled]="currentPage === 1"
+    (click)="currentPage = currentPage - 1">
+    السابق
+  </button>
+
+  <!-- أرقام الصفحات -->
+  <div class="flex gap-2 flex-wrap justify-center">
+    <button
+      *ngFor="let p of pages"
+      class="px-3 py-1.5 rounded-lg border transition"
+      [class.bg-blue-600]="currentPage === p"
+      [class.text-white]="currentPage === p"
+      [class.border-blue-600]="currentPage === p"
+      [class.bg-white]="currentPage !== p"
+      [class.text-black]="currentPage !== p"
+      (click)="currentPage = p">
+      {{ p }}
+    </button>
   </div>
+
+  <!-- زر التالي -->
+  <button
+    class="px-3 py-1.5 rounded-lg bg-slate-100 text-black hover:bg-slate-200 transition disabled:opacity-40"
+    [disabled]="currentPage === totalPages"
+    (click)="currentPage = currentPage + 1">
+    التالي
+  </button>
+
+</div>
+
+</div>
 
 </div>
 <!-- نافذة التفاصيل -->
@@ -204,4 +237,5 @@
     </div>
 
   </div>
+  
 </div>

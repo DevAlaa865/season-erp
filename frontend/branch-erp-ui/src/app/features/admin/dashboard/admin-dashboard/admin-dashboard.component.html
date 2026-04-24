@@ -1,17 +1,31 @@
-<div class="content-area max-w-[1400px] mx-auto">
+<div class="content-area max-w-[1800px] mx-auto">
 
   <!-- Welcome Section -->
-  <div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-    <div>
-      <h1 class="m-0 flex items-center gap-2 text-[var(--text-main)]">
-        مرحباً، {{ auth.getUserName() }}
-        <iconify-icon icon="solar:hand-stars-bold-duotone" class="text-[#FFC107]"></iconify-icon>
-      </h1>
-      <p class="text-body mt-1 font-medium text-[var(--text-tertiary)]">
-        اختصار سريع لأهم وظائف الإدارة داخل المنصة.
-      </p>
-    </div>
+<div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+  <div>
+    <h1 class="m-0 flex items-center gap-2 text-[var(--text-main)] font-bold text-3xl">
+
+      مرحباً،
+
+      <!-- لو المستخدم دوره BranchManagement يظهر اسم الفرع -->
+      <ng-container  *ngIf="auth.getRoles().includes('BranchManagement'); else showUserName">
+        {{ decodeArabic(auth.getBranchName()!) }}
+      </ng-container>
+
+      <!-- لو مش مستخدم فرع يظهر اسم المستخدم -->
+      <ng-template #showUserName>
+        {{ auth.getUserName() }}
+      </ng-template>
+
+      <iconify-icon icon="solar:hand-stars-bold-duotone" class="text-[#FFC107]"></iconify-icon>
+    </h1>
+
+    <p class="text-body mt-1 font-medium text-[var(--text-tertiary)]">
+      اختصار سريع لأهم وظائف الإدارة داخل المنصة.
+    </p>
   </div>
+</div>
+
 
   <!-- Stat Cards Grid -->
   <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5 mb-8">
@@ -59,7 +73,7 @@
     </div>
 
     <!-- إدارة المرتجعات والخصومات -->
-    <div *ngIf="auth.hasPermission('Permissions.Manage') || auth.hasPermission('Finance.View') || auth.hasPermission('Returns.View')"
+    <div *ngIf="auth.hasPermission('Permissions.Manage') || auth.hasPermission('Finance.View') || auth.hasPermission('Returns.View') ||auth.hasPermission('Discounts.View')"
          (click)="openReports()"
          class="stat-card cursor-pointer hover:shadow-md transition"
          style="border-left-color: var(--danger);">

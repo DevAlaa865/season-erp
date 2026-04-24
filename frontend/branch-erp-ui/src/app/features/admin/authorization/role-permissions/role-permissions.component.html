@@ -1,4 +1,8 @@
-<div class="max-w-4xl mx-auto bg-white/5 border border-blue-700 rounded-2xl p-6 text-white shadow-xl">
+<div class="max-w-4xl mx-auto 
+            bg-[var(--panel-bg)] 
+            border border-[var(--panel-border)] 
+            text-[var(--text)] 
+            rounded-2xl p-6 shadow-xl backdrop-blur-xl">
 
   <h2 class="text-lg font-semibold mb-4">
     إدارة صلاحيات الأدوار
@@ -6,11 +10,12 @@
 
   <!-- اختيار الدور -->
   <div class="mb-4">
-    <label class="block mb-1 text-sm text-blue-100">اختر الدور</label>
+      <label class="text-sm text-[var(--label-text)]">اختر الدور</label>
     <select
       [(ngModel)]="selectedRoleId"
       (change)="onRoleChange()"
-      class="w-full bg-blue-900/60 border border-blue-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+   class="w-full bg-[var(--input-bg)] border border-[var(--input-border)] 
+       text-[var(--input-text)] rounded-lg px-3 py-2 text-sm">
       <option value="">-- اختر الدور --</option>
 
       <!-- عرض اسم الدور بالعربي -->
@@ -23,7 +28,10 @@
   <!-- قائمة الصلاحيات -->
   <div *ngIf="selectedRoleId" class="mt-4 space-y-2 max-h-80 overflow-y-auto pr-2">
 
-    <div *ngFor="let perm of permissions" class="flex items-center justify-between bg-blue-900/40 px-3 py-2 rounded-lg">
+    <div *ngFor="let perm of permissions" class="flex items-center justify-between 
+       bg-[var(--input-bg)] border border-[var(--input-border)]
+       text-[var(--input-text)]
+       px-3 py-2 rounded-lg">
 
       <div>
         <!-- عرض اسم الصلاحية بالعربي -->
@@ -40,7 +48,7 @@
           type="checkbox"
           [checked]="isPermissionChecked(perm.id)"
           (change)="togglePermission(perm.id, $event)"
-          class="w-4 h-4 accent-emerald-400">
+          class="w-4 h-4 accent-[var(--checkbox-color)]">
       </div>
 
     </div>
@@ -48,7 +56,7 @@
   </div>
 
   <!-- رسالة لو مفيش دور مختار -->
-  <div *ngIf="!selectedRoleId" class="mt-4 text-sm text-blue-200">
+  <div *ngIf="!selectedRoleId" class="ext-sm text-[var(--label-text)]">
     من فضلك اختر دور لعرض وتعديل صلاحياته.
   </div>
 
@@ -57,7 +65,12 @@
     <button
       (click)="save()"
       [disabled]="!selectedRoleId || isLoading"
-      class="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-sm font-semibold text-white shadow-md">
+    class="px-4 py-2 rounded-lg 
+       bg-[var(--btn-green-bg)]
+       border border-[var(--btn-green-border)]
+       text-[var(--btn-text)]
+       hover:bg-[var(--btn-green-hover)]
+       shadow-lg shadow-black/20">
       {{ isLoading ? 'جارٍ الحفظ...' : 'حفظ الصلاحيات' }}
     </button>
 

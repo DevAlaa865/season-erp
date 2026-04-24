@@ -85,18 +85,18 @@ preventEnter(event: Event) {
       hasShortage: [false],
       attachmentPath: ['', Validators.required],
 
-      totalSales: [0, [Validators.required, Validators.min(0)]],
-      cashAmount: [0, [Validators.required, Validators.min(0)]],
-      networkAmount: [0, [Validators.required, Validators.min(0)]],
-      creditAmount: [0, [Validators.required, Validators.min(0)]],
-      grandTotal: [0, [Validators.required, Validators.min(0)]],
+      totalSales: [null, [Validators.required, Validators.min(0)]],
+      cashAmount: [null, [Validators.required, Validators.min(0)]],
+      networkAmount: [null, [Validators.required, Validators.min(0)]],
+      creditAmount: [null, [Validators.required, Validators.min(0)]],
+      grandTotal: [null, [Validators.required, Validators.min(0)]],
 
       difference: [{ value: 0, disabled: true }],
 
       supervisorNotes: [''],
 
-      totalInvoicesCount: [0, [Validators.required, Validators.min(0)]],
-      totalQuantities: [0, [Validators.required, Validators.min(0)]],
+      totalInvoicesCount: [null, [Validators.required, Validators.min(0)]],
+      totalQuantities: [null, [Validators.required, Validators.min(0)]],
 
       shortageDetails: this.fb.array([])
     });
@@ -240,7 +240,7 @@ checkTodayExists() {
   const name = type?.name || type?.shortageName || '';
 
   // 1) سحب أو مكافأة → الموظف مطلوب
-  if (name.includes('موظف') || name.includes('مكا')) {
+  if (name.includes('موظف') || name.includes('مكا')  ) {
     row.get('employeeId')?.setValidators([Validators.required]);
   } else {
     row.get('employeeId')?.clearValidators();

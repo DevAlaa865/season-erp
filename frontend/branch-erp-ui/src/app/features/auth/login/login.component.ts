@@ -54,4 +54,11 @@ export class LoginComponent {
       }
     });
   }
+
+  isPasswordVisible = false;
+loginError: string | null = null;
+
+togglePasswordVisibility() {
+  this.isPasswordVisible = !this.isPasswordVisible;
+}
 }

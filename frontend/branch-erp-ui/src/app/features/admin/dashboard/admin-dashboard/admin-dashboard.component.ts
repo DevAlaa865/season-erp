@@ -21,6 +21,7 @@ export class AdminDashboardComponent implements OnInit {
   ngOnInit(): void {
     const perms = this.auth.getPermissions();
     console.log('User permissions from token:', perms);
+    console.log(this.auth.getRoles());
   }
 
   openUsers() {
@@ -71,5 +72,7 @@ openReports()
   openActivities() {
     this.router.navigate(['/admin/activity-types']);
   }
-  
+  decodeArabic(text: string) {
+  return decodeURIComponent(escape(text));
+}
 }

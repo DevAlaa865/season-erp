@@ -1,28 +1,44 @@
-# --- Backend (.NET) ---
-backend/bin/
-backend/obj/
+# ============================
+# Backend (.NET)
+# ============================
+backend/BranchERP/BranchERP.Api/.vs/
+backend/BranchERP/BranchERP.Api/bin/
+backend/BranchERP/BranchERP.Api/obj/
+
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
 
-# --- Frontend (Angular) ---
+# Ignore uploads (images)
+backend/BranchERP/BranchERP.Api/wwwroot/uploads/
+
+# ============================
+# Frontend (Angular)
+# ============================
 frontend/node_modules/
 frontend/dist/
 frontend/.angular/
 npm-debug.log*
 yarn.lock
 
-# --- Environment / Secrets ---
+# ============================
+# Environment / Secrets
+# ============================
 *.env
+.env
 .env.*
 backend/appsettings.*.json
 backend/appsettings.Local.json
 
-# --- Logs ---
+# ============================
+# Logs
+# ============================
 logs/
 *.log
 
-# --- IDE / Editors ---
+# ============================
+# IDE / Editors
+# ============================
 .vscode/
 .idea/

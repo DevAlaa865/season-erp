@@ -1,44 +1,73 @@
-<div class="min-h-screen flex items-center justify-center p-6 bg-cover bg-center bg-no-repeat"
-     style="background-image: url('assets/backgroundImage/seisonPic.jpg');">
 
-  <div class="w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-2xl animate-[fadeIn_0.6s_ease-out]">
 
-    <h1 class="text-center text-2xl font-bold text-white mb-6">
-      تسجيل الدخول للمنصة
-    </h1>
 
-    <form [formGroup]="form" (ngSubmit)="login()" class="space-y-5">
 
-      <!-- اسم المستخدم -->
+<link rel="preload" as="image" href="assets/logo/logoBack.jpeg" />
+<div class="bg-cover bg-center"
+  style="background-image: url('assets/backgroundImage/logoBack.jpeg')">
+  <div class="flex h-screen items-center justify-center">
+    <div class="flex flex-col items-center space-y-8">
       <div>
-        <label class="block text-sm text-gray-200 mb-1">اسم المستخدم</label>
-        <input type="text"
-               formControlName="userName"
-               class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm outline-none focus:ring-2 focus:ring-blue-400 transition">
+   
+      <div class="w-80  rounded-[20px] bg-white p-8" style="box-shadow:#00000057 1px 3px 4px">
+        <h1 class="mb-4 text-center text-3xl font-bold text-black" style="text-shadow:#00000063 0px 3px 5px">
+          مرحبا بكم فى سيزون !
+        </h1>
+          <form [formGroup]="form" (ngSubmit)="login()" class="space-y-5">
+           <div class="space-y-4">
+                <input
+                  type="text"
+                  formControlName="userName"
+                  placeholder="ادخل اسم المستخدم"
+                  class="w-full text-black rounded-md bg-[#E9EFF6] p-2.5 placeholder:text-[#000000] text-[var(--text)]"
+                  style="box-shadow:rgb(0 0 0 / 21%) 0px 7px 5px 0px" />
+                
+                  
+              <div class="relative">
+          <input
+            formControlName="password"
+            [type]="isPasswordVisible ? 'text' : 'password'"
+            placeholder="ادخل الباسورد"
+            class="w-full text-black rounded-md bg-[#E9EFF6] p-2.5 pr-10 placeholder:text-[#000000]"
+            style="box-shadow:rgb(0 0 0 / 21%) 0px 7px 5px 0px" />
+
+          <!-- زرار العين -->
+                <button
+                  type="button"
+                  (click)="togglePasswordVisibility()"
+                  class="absolute inset-y-0 right-2 flex items-center text-gray-600 text-sm">
+                  {{ isPasswordVisible ? '🙈' : '👁️' }}
+                </button>
+              </div>
+                    </div>
+                <!--     <div class="mb-4 pt-2">
+                      <span
+                        class="ml-2 cursor-pointer text-[10px] text-[#228CE0] hover:underline"
+                        >Forget Password?</span>
+                    </div> -->
+                    <div class="mb-4 flex justify-center">
+                      <button
+                      type="submit"
+                          [disabled]="isLoading"
+                        class="h-10 w-full cursor-pointer rounded-md bg-gradient-to-br from-[#7336FF] to-[#3269FF] text-white shadow-md shadow-blue-950">
+                        دخول
+                        
+                      </button>
+                      
+                    </div>
+                    <div *ngIf="errorMessage" class="mt-2 text-center text-sm text-red-500">
+                            اسم المستخدم أو كلمة المرور غير صحيحة
+                      </div>
+                  <!--  <div class="text-center text-[#969696]">
+              Don&#x27;t have an account?
+              <span class="cursor-pointer text-[#7337FF] hover:underline"
+                >Sign up</span>
+            </div>
+ -->
+
+          </form>
+       
       </div>
-
-      <!-- كلمة المرور -->
-      <div>
-        <label class="block text-sm text-gray-200 mb-1">كلمة المرور</label>
-        <input type="password"
-               formControlName="password"
-               class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm outline-none focus:ring-2 focus:ring-blue-400 transition">
-      </div>
-
-      <!-- رسالة الخطأ -->
-      <div *ngIf="errorMessage" class="text-rose-400 text-xs">
-        {{ errorMessage }}
-      </div>
-
-      <!-- زر الدخول -->
-      <button type="submit"
-              [disabled]="isLoading"
-              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition disabled:opacity-50">
-        دخول
-      </button>
-
-    </form>
-
+    </div>
   </div>
-
 </div>

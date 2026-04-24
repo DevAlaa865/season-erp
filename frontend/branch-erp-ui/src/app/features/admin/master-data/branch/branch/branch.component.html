@@ -134,13 +134,14 @@
 
   <!-- جدول الفروع -->
   <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-
-    <div *ngIf="pagedBranches.length === 0" class="p-10 text-center text-blue-600 text-sm">
+    
+   <div class="overflow-x-auto">
+     <div *ngIf="pagedBranches.length === 0" class="p-10 text-center text-blue-600 text-sm">
       لا توجد نتائج مطابقة.
     </div>
 
-    <table *ngIf="pagedBranches.length > 0" class="w-full text-right text-sm">
-      <thead class="bg-blue-100 text-blue-800">
+    <table *ngIf="pagedBranches.length > 0" class="w-full text-right text-sm min-w-[1000px]" dir="rtl" >
+      <thead class="bg-blue-100 text-blue-800 text-center ">
         <tr>
           <th class="p-3">الاسم</th>
           <th class="p-3">الرقم</th>
@@ -189,7 +190,7 @@
       </tbody>
 
     </table>
-
+</div>
     <!-- الباجينيشن -->
     <div *ngIf="pagedBranches.length > 0"
          class="flex items-center justify-between px-4 py-3 border-t border-slate-200 bg-slate-50">
