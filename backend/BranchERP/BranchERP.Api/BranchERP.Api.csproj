@@ -25,6 +25,9 @@
     <ProjectReference Include="..\BranchERP.Domain\BranchERP.Domain.csproj" />
     <ProjectReference Include="..\BranchERP.Infrastructure\BranchERP.Infrastructure.csproj" />
   </ItemGroup>
+	<PropertyGroup>
+		<ServerGarbageCollection>false</ServerGarbageCollection>
+	</PropertyGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\uploads\headers\" />

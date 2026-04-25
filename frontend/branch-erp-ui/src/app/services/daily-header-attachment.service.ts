@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
+import { API_BASE_URL } from '../api.config';
 
 @Injectable({ providedIn: 'root' })
 export class DailyHeaderAttachmentService {
-  private baseUrl = 'https://localhost:7025/api/DailyHeaderAttachments'; // عدّل البورت حسب الـ API
+private baseUrl = `${API_BASE_URL}/DailyHeaderAttachments`; // عدّل البورت حسب الـ API
 
   constructor(private http: HttpClient) {}
 

@@ -31,14 +31,12 @@ namespace BranchERP.Api
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                    policy =>
-                    {
-                        policy.WithOrigins("http://localhost:4200")
-                              .AllowAnyHeader()
-                              .AllowAnyMethod()
-                              .AllowCredentials();
-                    });
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
             });
 
             // ============================
@@ -144,35 +142,40 @@ namespace BranchERP.Api
             // ============================
             // CORS
             // ============================
-            app.UseCors(MyAllowSpecificOrigins);
+        
 
             // ============================
             // Database Seeding
             // ============================
-            using (var scope = app.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
+            //using (var scope = app.Services.CreateScope())
+            //{
+            //    var services = scope.ServiceProvider;
 
-                var context = services.GetRequiredService<AppDbContext>();
-                var roleManager = services.GetRequiredService<RoleManager<ApplicationRole>>();
-                var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+            //    var context = services.GetRequiredService<AppDbContext>();
+            //    var roleManager = services.GetRequiredService<RoleManager<ApplicationRole>>();
+            //    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
 
-                await AppDbContextSeed.SeedAsync(context);
-                await AppDbContextSeed.SeedRolesAsync(roleManager);
-                //await AppDbContextSeed.SeedRolePermissionsAsync(context);
-                await AppDbContextSeed.SeedAdminAsync(userManager, roleManager);
-            }
-            app.UseStaticFiles();
+            //    await AppDbContextSeed.SeedAsync(context);
+            //    await AppDbContextSeed.SeedRolesAsync(roleManager);
+            //    //await AppDbContextSeed.SeedRolePermissionsAsync(context);
+            //    await AppDbContextSeed.SeedAdminAsync(userManager, roleManager);
+            //}
+          
             // ============================
             // Middlewares
             // ============================
             app.UseSwagger();
-            app.UseSwaggerUI();
-        
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
+                c.RoutePrefix = "docs";
+            });
+
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCors("AllowAll");
             app.UseStaticFiles();
             app.MapControllers();
 

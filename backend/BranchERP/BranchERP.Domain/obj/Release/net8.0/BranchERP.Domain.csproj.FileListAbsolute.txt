@@ -1,0 +1,12 @@
+C:\Season-ERP\backend\BranchERP\BranchERP.Domain\bin\Release\net8.0\BranchERP.Domain.deps.json
+C:\Season-ERP\backend\BranchERP\BranchERP.Domain\bin\Release\net8.0\BranchERP.Domain.dll
+C:\Season-ERP\backend\BranchERP\BranchERP.Domain\bin\Release\net8.0\BranchERP.Domain.pdb
+C:\Season-ERP\backend\BranchERP\BranchERP.Domain\obj\Release\net8.0\BranchERP.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Season-ERP\backend\BranchERP\BranchERP.Domain\obj\Release\net8.0\BranchERP.Domain.AssemblyInfoInputs.cache
+C:\Season-ERP\backend\BranchERP\BranchERP.Domain\obj\Release\net8.0\BranchERP.Domain.AssemblyInfo.cs
+C:\Season-ERP\backend\BranchERP\BranchERP.Domain\obj\Release\net8.0\BranchERP.Domain.csproj.CoreCompileInputs.cache
+C:\Season-ERP\backend\BranchERP\BranchERP.Domain\obj\Release\net8.0\BranchERP.Domain.sourcelink.json
+C:\Season-ERP\backend\BranchERP\BranchERP.Domain\obj\Release\net8.0\BranchERP.Domain.dll
+C:\Season-ERP\backend\BranchERP\BranchERP.Domain\obj\Release\net8.0\refint\BranchERP.Domain.dll
+C:\Season-ERP\backend\BranchERP\BranchERP.Domain\obj\Release\net8.0\BranchERP.Domain.pdb
+C:\Season-ERP\backend\BranchERP\BranchERP.Domain\obj\Release\net8.0\ref\BranchERP.Domain.dll

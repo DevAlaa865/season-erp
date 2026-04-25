@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { API_BASE_URL } from '../api.config';
 interface ApiResponse<T> {
   success: boolean;
   message: string;
@@ -14,7 +14,7 @@ interface ApiResponse<T> {
 })
 export class MasterDataService {
 
-  private baseUrl = 'https://localhost:7025/api';
+private baseUrl = `${API_BASE_URL}`;
 
   constructor(private http: HttpClient) {}
 

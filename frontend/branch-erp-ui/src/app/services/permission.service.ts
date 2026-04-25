@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { API_BASE_URL } from '../api.config';
 export interface Permission {
   id: number;
   name: string;
@@ -19,7 +19,7 @@ export interface PermissionCreate {
 export class PermissionService {
 
   // ✅ ده الـ API الجديد اللي عملناه في الباك
-  private baseUrl = 'https://localhost:7025/api/Permissions';
+private baseUrl = `${API_BASE_URL}/Permissions`;
 
   constructor(private http: HttpClient) {}
 

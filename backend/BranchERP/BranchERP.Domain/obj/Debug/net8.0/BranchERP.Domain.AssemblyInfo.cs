@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BranchERP.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a0abcdd9ecf4d3100f487a2bd9ec384061f4e9f1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c6a4b84d0978524c3f42dc396625317adbb157e8")]
 [assembly: System.Reflection.AssemblyProductAttribute("BranchERP.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BranchERP.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

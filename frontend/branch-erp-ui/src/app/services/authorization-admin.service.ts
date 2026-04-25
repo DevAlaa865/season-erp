@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { API_BASE_URL } from '../api.config';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorizationAdminService {
 
-  private baseUrl = 'https://localhost:7025/api/AuthorizationAdmin';
-  private authBaseUrl = 'https://localhost:7025/api/Auth';
-  private authBaseUrl2 = 'https://localhost:7025/api';
+private baseUrl = `${API_BASE_URL}/AuthorizationAdmin`;
+private authBaseUrl = 'https://localhost:7025/api/Auth';
+private authBaseUrl2 = `${API_BASE_URL}`;
   constructor(private http: HttpClient) {}
 
   updateUserData(dto: any) {

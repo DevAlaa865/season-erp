@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-
+import { API_BASE_URL } from '../api.config';
 @Injectable({ providedIn: 'root' })
 export class ShortageAttachmentService {
-  private baseUrl = 'https://localhost:7025/api/ShortageAttachments';
+private baseUrl = `${API_BASE_URL}/ShortageAttachments`;
 
   constructor(private http: HttpClient) {}
 

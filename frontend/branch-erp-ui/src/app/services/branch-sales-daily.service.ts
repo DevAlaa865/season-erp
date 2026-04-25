@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
+import { API_BASE_URL } from '../api.config';
 @Injectable({
   providedIn: 'root'
 })
 export class BranchSalesDailyService {
 
-  private baseUrl = 'https://localhost:7025/api/BranchSalesDaily'; // عدّل الـ URL حسب السيرفر
+private baseUrl = `${API_BASE_URL}/BranchSalesDaily`; // عدّل الـ URL حسب السيرفر
 
   constructor(private http: HttpClient) {}
   // 🔹 استعلام: هل اليومية موجودة لهذا الفرع وهذا التاريخ؟
